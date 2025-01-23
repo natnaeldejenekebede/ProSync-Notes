@@ -70,6 +70,24 @@ export default function ResponsiveDrawer({
           </ListItemButton>
           <ListItemButton
             onClick={() => {
+              navigate("/notes");
+              onClose();
+            }}
+            sx={{
+              fontWeight: isActive("/notes") ? "bold" : "normal",
+              color: isActive("/notes") ? "white" : "text.primary",
+              backgroundColor: isActive("/notes")
+                ? "primary.light"
+                : "transparent",
+              "&:hover": {
+                backgroundColor: "primary.light",
+              },
+            }}
+          >
+            <ListItemText primary="Notes" />
+          </ListItemButton>
+          <ListItemButton
+            onClick={() => {
               navigate("/profile");
               onClose();
             }}
@@ -88,24 +106,6 @@ export default function ResponsiveDrawer({
           </ListItemButton>
           {isLoggedIn ? (
             <>
-              <ListItemButton
-                onClick={() => {
-                  navigate("/notes");
-                  onClose();
-                }}
-                sx={{
-                  fontWeight: isActive("/notes") ? "bold" : "normal",
-                  color: isActive("/notes") ? "white" : "text.primary",
-                  backgroundColor: isActive("/notes")
-                    ? "primary.light"
-                    : "transparent",
-                  "&:hover": {
-                    backgroundColor: "primary.light",
-                  },
-                }}
-              >
-                <ListItemText primary="Notes" />
-              </ListItemButton>
               <ListItemButton
                 onClick={() => {
                   onLogout();
@@ -164,7 +164,6 @@ export default function ResponsiveDrawer({
                   checked={isDarkMode}
                   onChange={() => {
                     toggleTheme();
-                    onClose();
                   }}
                 />
               }
