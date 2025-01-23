@@ -7,6 +7,8 @@ import {
   Box,
   Toolbar,
   Typography,
+  Switch,
+  FormControlLabel,
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -56,9 +58,12 @@ export default function ResponsiveDrawer({
               onClose();
             }}
             sx={{
-              borderBottom: isActive('/') ? '3px solid #00695c' : 'none',
               fontWeight: isActive('/') ? 'bold' : 'normal',
-              color: isActive('/') ? 'primary.main' : 'text.primary',
+              color: isActive('/') ? 'white' : 'text.primary',
+              backgroundColor: isActive('/') ? 'primary.light' : 'transparent',
+              '&:hover': {
+                backgroundColor: 'primary.light',
+              },
             }}
           >
             <ListItemText primary="Home" />
@@ -69,9 +74,12 @@ export default function ResponsiveDrawer({
               onClose();
             }}
             sx={{
-              borderBottom: isActive('/profile') ? '3px solid #00695c' : 'none',
               fontWeight: isActive('/profile') ? 'bold' : 'normal',
-              color: isActive('/profile') ? 'primary.main' : 'text.primary',
+              color: isActive('/profile') ? 'white' : 'text.primary',
+              backgroundColor: isActive('/profile') ? 'primary.light' : 'transparent',
+              '&:hover': {
+                backgroundColor: 'primary.light',
+              },
             }}
           >
             <ListItemText primary="Profile" />
@@ -84,9 +92,12 @@ export default function ResponsiveDrawer({
                   onClose();
                 }}
                 sx={{
-                  borderBottom: isActive('/notes') ? '3px solid #00695c' : 'none',
                   fontWeight: isActive('/notes') ? 'bold' : 'normal',
-                  color: isActive('/notes') ? 'primary.main' : 'text.primary',
+                  color: isActive('/notes') ? 'white' : 'text.primary',
+                  backgroundColor: isActive('/notes') ? 'primary.light' : 'transparent',
+                  '&:hover': {
+                    backgroundColor: 'primary.light',
+                  },
                 }}
               >
                 <ListItemText primary="Notes" />
@@ -108,9 +119,12 @@ export default function ResponsiveDrawer({
                   onClose();
                 }}
                 sx={{
-                  borderBottom: isActive('/login') ? '3px solid #00695c' : 'none',
                   fontWeight: isActive('/login') ? 'bold' : 'normal',
-                  color: isActive('/login') ? 'primary.main' : 'text.primary',
+                  color: isActive('/login') ? 'white' : 'text.primary',
+                  backgroundColor: isActive('/login') ? 'primary.light' : 'transparent',
+                  '&:hover': {
+                    backgroundColor: 'primary.light',
+                  },
                 }}
               >
                 <ListItemText primary="Login" />
@@ -130,13 +144,21 @@ export default function ResponsiveDrawer({
               </ListItemButton>
             </>
           )}
-          <ListItemButton
-            onClick={() => {
-              toggleTheme();
-              onClose();
-            }}
-          >
-            <ListItemText primary={isDarkMode ? 'Light Mode' : 'Dark Mode'} />
+          <div style={{ borderBottom: '1px solid #f0f0f0', margin: '8px 16px' }} />
+          <ListItemButton>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={isDarkMode}
+                  onChange={() => {
+                    toggleTheme();
+                    onClose();
+                  }}
+                />
+              }
+              label={isDarkMode ? 'Dark Mode' : 'Light Mode'}
+              sx={{ ml: 1 }}
+            />
           </ListItemButton>
         </List>
       </Box>

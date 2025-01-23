@@ -9,7 +9,7 @@
     "start:dev": "ts-node src/main.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Son Nguyen",
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^11.0.4",

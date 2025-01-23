@@ -1,5 +1,5 @@
 import { Box, Typography, IconButton, Link } from '@mui/material';
-import { GitHub, Twitter, Facebook } from '@mui/icons-material';
+import {GitHub, Language, LinkedIn, Mail} from '@mui/icons-material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 
@@ -53,7 +53,7 @@ export default function Footer() {
         }}
       >
         <IconButton
-          href="#"
+          href="https://github.com/hoangsonww/CollabNote-Fullstack-App"
           sx={{
             color: 'white',
             transition: 'transform 0.3s ease, color 0.3s ease',
@@ -66,7 +66,7 @@ export default function Footer() {
           <GitHub />
         </IconButton>
         <IconButton
-          href="#"
+          href="https://www.linkedin.com/in/hoangsonw/"
           sx={{
             color: 'white',
             transition: 'transform 0.3s ease, color 0.3s ease',
@@ -76,10 +76,10 @@ export default function Footer() {
             },
           }}
         >
-          <Twitter />
+          <LinkedIn />
         </IconButton>
         <IconButton
-          href="#"
+          href="https://sonnguyenhoang.com"
           sx={{
             color: 'white',
             transition: 'transform 0.3s ease, color 0.3s ease',
@@ -89,7 +89,20 @@ export default function Footer() {
             },
           }}
         >
-          <Facebook />
+          <Language />
+        </IconButton>
+        <IconButton
+          href="mailto:hoangson091104@gmail.com"
+          sx={{
+            color: 'white',
+            transition: 'transform 0.3s ease, color 0.3s ease',
+            '&:hover': {
+              transform: 'scale(1.1)',
+              color: 'secondary.main',
+            },
+          }}
+        >
+          <Mail />
         </IconButton>
       </Box>
 
