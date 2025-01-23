@@ -62,9 +62,12 @@ export default function ProfilePage() {
 
   const fetchNotesCount = async () => {
     try {
-      const res = await fetch("https://collabnote-fullstack-app.onrender.com/notes", {
-        headers: { Authorization: `Bearer ${userToken}` },
-      });
+      const res = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/notes",
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        },
+      );
       if (!res.ok) throw new Error("Failed to fetch notes count");
       const data = await res.json();
       setNotesCount(data.length); // Assuming the response is an array of notes
@@ -398,7 +401,8 @@ export default function ProfilePage() {
           <strong>Date Joined:</strong> {joinedDate}
         </Typography>
         <Typography sx={{ mb: 2 }}>
-          <strong>Notes Created:</strong> {notesCount !== null ? notesCount : "Loading..."}
+          <strong>Notes Created:</strong>{" "}
+          {notesCount !== null ? notesCount : "Loading..."}
         </Typography>
         <Typography sx={{ mb: 2 }}>
           <strong>Today's Date:</strong> {today}

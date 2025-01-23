@@ -30,7 +30,8 @@ import {
   Info,
   Edit,
   ArrowUpward,
-  ArrowDownward, Close,
+  ArrowDownward,
+  Close,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
@@ -249,6 +250,43 @@ export default function NotesPage() {
       setLoading(false);
     }
   };
+
+  const [confirmDeleteSelectedOpen, setConfirmDeleteSelectedOpen] =
+    useState(false);
+
+  const openConfirmDeleteSelectedDialog = () => {
+    setConfirmDeleteSelectedOpen(true);
+  };
+
+  const closeConfirmDeleteSelectedDialog = () => {
+    setConfirmDeleteSelectedOpen(false);
+  };
+
+  const handleDeleteSelectedConfirmed = () => {
+    massRemoveNotes();
+    closeConfirmDeleteSelectedDialog();
+  };
+
+  const [confirmDeleteDialogOpen, setConfirmDeleteDialogOpen] = useState(false);
+  const [noteToDelete, setNoteToDelete] = useState<Note | null>(null);
+
+  const openConfirmDeleteDialog = (note: Note) => {
+    setNoteToDelete(note);
+    setConfirmDeleteDialogOpen(true);
+  };
+
+  const closeConfirmDeleteDialog = () => {
+    setNoteToDelete(null);
+    setConfirmDeleteDialogOpen(false);
+  };
+
+  const handleDeleteConfirmed = () => {
+    if (noteToDelete) {
+      removeNote(noteToDelete.id);
+    }
+    closeConfirmDeleteDialog();
+  };
+
   const massRemoveNotes = async () => {
     for (const nId of selectedNotes) {
       await removeNote(nId);
@@ -421,7 +459,7 @@ export default function NotesPage() {
               variant="outlined"
               color="error"
               startIcon={<Delete />}
-              onClick={massRemoveNotes}
+              onClick={openConfirmDeleteSelectedDialog}
             >
               Delete Selected
             </Button>
@@ -485,7 +523,9 @@ export default function NotesPage() {
                     },
                   }}
                 >
-                  <Box sx={{ position: "absolute", top: 8, left: 8, zIndex: 10 }}>
+                  <Box
+                    sx={{ position: "absolute", top: 8, left: 8, zIndex: 10 }}
+                  >
                     <Checkbox
                       checked={selectedNotes.includes(note.id)}
                       onChange={() => handleSelectNote(note.id)}
@@ -557,7 +597,9 @@ export default function NotesPage() {
                         }}
                       >
                         {note.tags.map((tag, idx) => {
-                          const preTag = PREDEFINED_TAGS.find((t) => t.label === tag);
+                          const preTag = PREDEFINED_TAGS.find(
+                            (t) => t.label === tag,
+                          );
                           return (
                             <Chip
                               key={`${note.id}-tag-${idx}`}
@@ -589,13 +631,18 @@ export default function NotesPage() {
                               ? "#3f51b5"
                               : textColor,
                         }}
-                        title={ note.shared_with_user_ids.length > 0 ? `Shared with ${note.shared_with_user_ids.length} users` : "Share"}
+                        title={
+                          note.shared_with_user_ids.length > 0
+                            ? `Shared with ${note.shared_with_user_ids.length} users`
+                            : "Share"
+                        }
                       >
                         <Share />
                       </IconButton>
                       <IconButton
-                        onClick={() => removeNote(note.id)}
+                        onClick={() => openConfirmDeleteDialog(note)}
                         sx={{ color: "#f44336" }}
+                        title="Delete This Note"
                       >
                         <Delete />
                       </IconButton>
@@ -622,13 +669,43 @@ export default function NotesPage() {
         </Grid>
       </Container>
 
+      <Dialog
+        open={confirmDeleteDialogOpen}
+        onClose={closeConfirmDeleteDialog}
+        aria-labelledby="confirm-delete-dialog-title"
+        aria-describedby="confirm-delete-dialog-description"
+      >
+        <DialogTitle id="confirm-delete-dialog-title">
+          Confirm Deletion
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="confirm-delete-dialog-description">
+            Are you sure you want to delete the note{" "}
+            <strong>{noteToDelete?.title}</strong>? This action cannot be
+            undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeConfirmDeleteDialog} color="inherit">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDeleteConfirmed}
+            variant="contained"
+            color="error"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)}>
         <DialogTitle
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            fontWeight: "bold"
+            fontWeight: "bold",
           }}
         >
           Share Note
@@ -663,7 +740,8 @@ export default function NotesPage() {
           </Box>
 
           <DialogContentText sx={{ mt: 2 }}>
-            Alternatively, copy the note's details or share via email or social media:
+            Alternatively, copy the note's details or share via email or social
+            media:
           </DialogContentText>
 
           {detailNote ? (
@@ -677,7 +755,10 @@ export default function NotesPage() {
               <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                 Content:
               </Typography>
-              <Typography variant="body2" sx={{ whiteSpace: "pre-wrap", mb: 2 }}>
+              <Typography
+                variant="body2"
+                sx={{ whiteSpace: "pre-wrap", mb: 2 }}
+              >
                 {detailNote.content}
               </Typography>
               {detailNote.due_date && (
@@ -695,14 +776,17 @@ export default function NotesPage() {
                   <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                     Tags:
                   </Typography>
-                  <Box sx={{ mb: 2, display: "flex", gap: 1, flexWrap: "wrap" }}>
+                  <Box
+                    sx={{ mb: 2, display: "flex", gap: 1, flexWrap: "wrap" }}
+                  >
                     {detailNote.tags.map((tag, idx) => (
                       <Chip
                         key={idx}
                         label={tag}
                         sx={{
-                          bgcolor: PREDEFINED_TAGS.find((t) => t.label === tag)
-                            ?.color || "#757575",
+                          bgcolor:
+                            PREDEFINED_TAGS.find((t) => t.label === tag)
+                              ?.color || "#757575",
                           color: "#fff",
                           fontWeight: 600,
                         }}
@@ -717,10 +801,12 @@ export default function NotesPage() {
                 onClick={() => {
                   navigator.clipboard.writeText(
                     `Title: ${detailNote.title}\n\nContent: ${detailNote.content}\n\n${
-                      detailNote.due_date ? `Due Date: ${detailNote.due_date}\n\n` : ""
+                      detailNote.due_date
+                        ? `Due Date: ${detailNote.due_date}\n\n`
+                        : ""
                     }Tags: ${
                       detailNote.tags ? detailNote.tags.join(", ") : "None"
-                    }`
+                    }`,
                   );
                   alert("Note details copied to clipboard!");
                 }}
@@ -731,11 +817,13 @@ export default function NotesPage() {
                 variant="outlined"
                 component="a"
                 href={`mailto:?subject=${encodeURIComponent(
-                  detailNote.title
+                  detailNote.title,
                 )}&body=${encodeURIComponent(
                   `Title: ${detailNote.title}\n\nContent: ${detailNote.content}\n\n${
-                    detailNote.due_date ? `Due Date: ${detailNote.due_date}\n\n` : ""
-                  }Tags: ${detailNote.tags ? detailNote.tags.join(", ") : "None"}`
+                    detailNote.due_date
+                      ? `Due Date: ${detailNote.due_date}\n\n`
+                      : ""
+                  }Tags: ${detailNote.tags ? detailNote.tags.join(", ") : "None"}`,
                 )}`}
                 sx={{ mr: 1 }}
               >
@@ -745,7 +833,7 @@ export default function NotesPage() {
                 variant="outlined"
                 component="a"
                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `${detailNote.title}\n\n${detailNote.content}`
+                  `${detailNote.title}\n\n${detailNote.content}`,
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -759,6 +847,35 @@ export default function NotesPage() {
             </Typography>
           )}
         </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={confirmDeleteSelectedOpen}
+        onClose={closeConfirmDeleteSelectedDialog}
+        aria-labelledby="confirm-delete-selected-title"
+        aria-describedby="confirm-delete-selected-description"
+      >
+        <DialogTitle id="confirm-delete-selected-title">
+          Confirm Deletion
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="confirm-delete-selected-description">
+            Are you sure you want to delete the selected notes? This action
+            cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeConfirmDeleteSelectedDialog} color="inherit">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDeleteSelectedConfirmed}
+            variant="contained"
+            color="error"
+          >
+            Delete
+          </Button>
+        </DialogActions>
       </Dialog>
 
       <Dialog
