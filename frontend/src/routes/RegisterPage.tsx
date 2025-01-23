@@ -10,7 +10,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
 
 export default function RegisterPage() {
@@ -135,8 +135,8 @@ export default function RegisterPage() {
           </Box>
           <Typography variant="body2" sx={{ mt: 4 }}>
             Already have an account?{" "}
-            <a
-              href="/login"
+            <Link
+              to="/login"
               style={{
                 color: "#00695c",
                 textDecoration: "underline",
@@ -144,7 +144,7 @@ export default function RegisterPage() {
               }}
             >
               Login
-            </a>
+            </Link>
           </Typography>
         </Paper>
       </Container>

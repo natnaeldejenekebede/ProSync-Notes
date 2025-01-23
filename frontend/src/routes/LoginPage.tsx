@@ -10,7 +10,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
 
 export default function LoginPage() {
@@ -99,8 +99,8 @@ export default function LoginPage() {
           </Box>
           <Typography variant="body2" sx={{ mt: 2 }}>
             Forgot your password?{" "}
-            <a
-              href="/forgot-password"
+            <Link
+              to="/forgot-password"
               style={{
                 color: "#00695c",
                 textDecoration: "underline",
@@ -108,7 +108,7 @@ export default function LoginPage() {
               }}
             >
               Reset Password
-            </a>
+            </Link>
           </Typography>
         </Paper>
       </Container>
