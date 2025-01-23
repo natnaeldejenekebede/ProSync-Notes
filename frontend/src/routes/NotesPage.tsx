@@ -752,7 +752,7 @@ export default function NotesPage() {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText sx={{ wordWrap: "break-word", overflowWrap: "break-word" }}>
             Enter the username of the user you want to share with:
           </DialogContentText>
           <TextField
@@ -777,41 +777,60 @@ export default function NotesPage() {
             <hr />
           </Box>
 
-          <DialogContentText sx={{ mt: 2 }}>
-            Alternatively, copy the note's details or share via email or social
-            media:
+          <DialogContentText
+            sx={{ mt: 2, wordWrap: "break-word", overflowWrap: "break-word" }}
+          >
+            Alternatively, copy the note's details or share via email or social media:
           </DialogContentText>
 
           {detailNote ? (
             <Box sx={{ mt: 2 }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+              <Typography
+                variant="subtitle2"
+                sx={{ fontWeight: 600, wordWrap: "break-word", overflowWrap: "break-word" }}
+              >
                 Title:
               </Typography>
-              <Typography variant="body2" sx={{ mb: 2 }}>
+              <Typography
+                variant="body2"
+                sx={{ mb: 2, wordWrap: "break-word", overflowWrap: "break-word" }}
+              >
                 {detailNote.title}
               </Typography>
-              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+              <Typography
+                variant="subtitle2"
+                sx={{ fontWeight: 600, wordWrap: "break-word", overflowWrap: "break-word" }}
+              >
                 Content:
               </Typography>
               <Typography
                 variant="body2"
-                sx={{ whiteSpace: "pre-wrap", mb: 2 }}
+                sx={{ whiteSpace: "pre-wrap", mb: 2, wordWrap: "break-word", overflowWrap: "break-word" }}
               >
                 {detailNote.content}
               </Typography>
               {detailNote.due_date && (
                 <>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: 600, wordWrap: "break-word", overflowWrap: "break-word" }}
+                  >
                     Due Date:
                   </Typography>
-                  <Typography variant="body2" sx={{ mb: 2 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ mb: 2, wordWrap: "break-word", overflowWrap: "break-word" }}
+                  >
                     {detailNote.due_date}
                   </Typography>
                 </>
               )}
               {detailNote.tags && detailNote.tags.length > 0 && (
                 <>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                  <Typography
+                    variant="subtitle2"
+                    sx={{ fontWeight: 600, wordWrap: "break-word", overflowWrap: "break-word" }}
+                  >
                     Tags:
                   </Typography>
                   <Box
@@ -827,6 +846,8 @@ export default function NotesPage() {
                               ?.color || "#757575",
                           color: "#fff",
                           fontWeight: 600,
+                          wordWrap: "break-word",
+                          overflowWrap: "break-word",
                         }}
                       />
                     ))}
@@ -880,7 +901,7 @@ export default function NotesPage() {
               </Button>
             </Box>
           ) : (
-            <Typography sx={{ mt: 2, color: "red" }}>
+            <Typography sx={{ mt: 2, color: "red", wordWrap: "break-word", overflowWrap: "break-word" }}>
               Unable to load note details for sharing.
             </Typography>
           )}
