@@ -17,6 +17,13 @@
     "collabnote",
     "backend"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoangsonww/CollabNote-Fullstack-App.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hoangsonww/CollabNote-Fullstack-App/issues"
+  },
   "author": "Son Nguyen",
   "license": "MIT",
   "dependencies": {
