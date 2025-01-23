@@ -6,7 +6,6 @@ import { Request, Response, NextFunction } from "express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { join } from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import { serve, setup } from "swagger-ui-express";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -25,22 +24,27 @@ async function bootstrap() {
     next();
   });
 
+  // Redirect `/` to `/api`
+  app.use("/", (req: Request, res: Response) => {
+    res.redirect("/api");
+  });
+
   // Swagger Setup with Enhanced Metadata
   const swaggerConfig = new DocumentBuilder()
     .setTitle("CollabNote API")
     .setDescription(
-      "Comprehensive API documentation for the CollabNote application, an intuitive collaborative notes platform.",
+      "Comprehensive API documentation for the CollabNote application, an intuitive collaborative notes platform."
     )
     .setVersion("1.0.0")
     .addBearerAuth()
     .setContact(
       "Son Nguyen",
       "https://github.com/hoangsonww",
-      "hoangson091104@gmail.com",
+      "hoangson091104@gmail.com"
     )
     .setLicense("MIT", "https://opensource.org/licenses/MIT")
     .addServer("http://localhost:4000", "Development server")
-    .addServer("https://collabnote-tool-backend.vercel.app/", "Production server")
+    .addServer("https://collabnote-fullstack-app.onrender.com", "Production server")
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
