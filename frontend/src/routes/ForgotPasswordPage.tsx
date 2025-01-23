@@ -82,16 +82,16 @@ export default function ForgotPasswordPage() {
 
   return (
     <>
-      <LoadingOverlay loading={loading}/>
-      <Container maxWidth="sm" sx={{mt: 8}}>
-        <Paper sx={{p: 4, backgroundColor: "background.paper"}}>
-          <Typography variant="h4" sx={{mb: 2, fontWeight: 600}}>
+      <LoadingOverlay loading={loading} />
+      <Container maxWidth="sm" sx={{ mt: 8 }}>
+        <Paper sx={{ p: 4, backgroundColor: "background.paper" }}>
+          <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
             Forgot Password
           </Typography>
-          <Typography variant="body2" sx={{mb: 3, color: "text.secondary"}}>
+          <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
             Enter your email to reset your password.
           </Typography>
-          <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
               label="Email"
               fullWidth
@@ -109,7 +109,7 @@ export default function ForgotPasswordPage() {
               <>
                 <Typography
                   variant="body2"
-                  sx={{color: "text.secondary", mb: 1}}
+                  sx={{ color: "text.secondary", mb: 1 }}
                 >
                   Email found! Enter your new password. Remember to keep it
                   safe.
@@ -128,7 +128,7 @@ export default function ForgotPasswordPage() {
                           onClick={() => setShowNewPass(!showNewPass)}
                           edge="end"
                         >
-                          {showNewPass ? <VisibilityOff/> : <Visibility/>}
+                          {showNewPass ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     ),
@@ -148,7 +148,7 @@ export default function ForgotPasswordPage() {
                           onClick={() => setShowConfirmPass(!showConfirmPass)}
                           edge="end"
                         >
-                          {showConfirmPass ? <VisibilityOff/> : <Visibility/>}
+                          {showConfirmPass ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
                     ),
@@ -159,7 +159,7 @@ export default function ForgotPasswordPage() {
                 </Button>
               </>
             )}
-            <Typography variant="body2" sx={{mt: 2}}>
+            <Typography variant="body2" sx={{ mt: 2 }}>
               Remembered your password?{" "}
               <Link
                 to="/login"

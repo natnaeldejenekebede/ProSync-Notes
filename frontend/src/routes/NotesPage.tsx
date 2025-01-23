@@ -930,7 +930,10 @@ export default function NotesPage() {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <IconButton onClick={handleToggleEdit} title={editMode ? "Cancel Edit" : "Edit"}>
+            <IconButton
+              onClick={handleToggleEdit}
+              title={editMode ? "Cancel Edit" : "Edit"}
+            >
               <Edit />
             </IconButton>
             <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -944,12 +947,16 @@ export default function NotesPage() {
         <DialogContent
           dividers
           sx={{
-            backgroundColor: editMode ? "#ffffff" : detailNote?.color || "#ffffff",
+            backgroundColor: editMode
+              ? "#ffffff"
+              : detailNote?.color || "#ffffff",
             transition: "background-color 0.2s",
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            color: editMode ? "#000000" : getContrastingTextColor(detailNote?.color || "#ffffff"), // Black text in edit mode
+            color: editMode
+              ? "#000000"
+              : getContrastingTextColor(detailNote?.color || "#ffffff"), // Black text in edit mode
           }}
         >
           {editMode ? (
@@ -1110,14 +1117,18 @@ export default function NotesPage() {
                     }}
                   >
                     {detailNote.tags.map((tag, idx) => {
-                      const preTag = PREDEFINED_TAGS.find((t) => t.label === tag);
+                      const preTag = PREDEFINED_TAGS.find(
+                        (t) => t.label === tag,
+                      );
                       return (
                         <Chip
                           key={`${detailNote?.id}-tag-${idx}`}
                           label={tag}
                           sx={{
                             bgcolor: preTag ? preTag.color : "#757575",
-                            color: getContrastingTextColor(preTag?.color || "#757575"),
+                            color: getContrastingTextColor(
+                              preTag?.color || "#757575",
+                            ),
                             fontWeight: 600,
                           }}
                         />
