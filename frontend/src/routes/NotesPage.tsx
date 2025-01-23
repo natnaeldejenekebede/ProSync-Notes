@@ -856,7 +856,7 @@ export default function NotesPage() {
               )}
               <Button
                 variant="outlined"
-                sx={{ mr: 1 }}
+                sx={{ mr: 1, mt: 1 }}
                 onClick={() => {
                   navigator.clipboard.writeText(
                     `Title: ${detailNote.title}\n\nContent: ${detailNote.content}\n\n${
@@ -884,7 +884,7 @@ export default function NotesPage() {
                       : ""
                   }Tags: ${detailNote.tags ? detailNote.tags.join(", ") : "None"}`,
                 )}`}
-                sx={{ mr: 1 }}
+                sx={{ mr: 1, mt: 1 }}
               >
                 Share via Email
               </Button>
@@ -896,6 +896,7 @@ export default function NotesPage() {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                sx={{ mt: 1 }}
               >
                 Share on Twitter
               </Button>
