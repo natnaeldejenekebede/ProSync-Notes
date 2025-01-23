@@ -28,10 +28,13 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 - **Authentication**: Secure user login, registration, and password management.
 - **Notes Management**: Create, update, delete, and reorder notes.
 - **Sharing**: Share notes with other users seamlessly.
+- **Search**: Search for notes by title or content.
 - **User Profiles**: Manage and search user profiles.
+- **Profile Settings**: Update user profile information.
+- **Dark Mode**: Toggle between light and dark themes.
+- **Testing**: Unit and integration tests for backend and frontend.
+- **Responsive Design**: Works on all devices and screen sizes.
 - **Swagger Documentation**: Comprehensive API documentation.
-
----
 
 ## 🎯 Tech Stack
 
@@ -47,7 +50,6 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 | [Swagger](https://swagger.io/)                | API documentation and testing tool  |
 | [ShadCN](https://ui.shadcn.dev/)              | UI components for a modern design   |
 
----
 
 ## 🖼️ UI Overview
 
@@ -64,8 +66,6 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 ### API Documentation
 *(Add a screenshot of Swagger here)*
 
----
-
 ## 🛠️ Getting Started
 
 Follow these steps to set up the project on your local machine.
@@ -77,8 +77,6 @@ Ensure you have the following installed:
 - **npm**: v9 or above
 - **PostgreSQL**: v15 or above
 - **Docker** (Optional)
-
----
 
 ### Installation
 
@@ -104,8 +102,10 @@ Ensure you have the following installed:
 - Create `.env` files in the `backend` and `frontend` directories.
 - For **backend** (`backend/.env`):
   ```env
-  DATABASE_URL=postgres://user:password@localhost:5432/collabnote
+  SUPABASE_URL=your_supabase_url
+  SUPABASE_SERVICE_KEY=your_supabase_service_key
   JWT_SECRET=your_jwt_secret
+  JWT_EXPIRES_IN=jwt_expiry_time(eg. 1d)
   PORT=4000
   ```
 - For **frontend** (`frontend/.env`):
@@ -130,10 +130,10 @@ Ensure you have the following installed:
    ```
 
 3. Open your browser:
-- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Frontend**: [http://localhost:5172](http://localhost:5172) or your selected Vite port
+- **Backend**: [http://localhost:4000](http://localhost:4000)
 - **Swagger**: [http://localhost:4000/api](http://localhost:4000/api)
 
----
 
 ### Using Docker
 
@@ -145,8 +145,6 @@ Ensure you have the following installed:
 2. **Access the Services**:
 - Backend: [http://localhost:4000](http://localhost:4000)
 - Frontend: [http://localhost:3000](http://localhost:3000)
-
----
 
 ## 📖 API Documentation
 
@@ -170,7 +168,6 @@ All APIs are documented in Swagger. Access the documentation at [http://localhos
 | GET    | `/profile/userId/{id}`     | Retrieve a user profile by ID             |
 | GET    | `/profile/search`          | Search for a user profile by username     |
 
----
 
 ## 🧪 Testing
 
@@ -188,19 +185,13 @@ cd frontend
 npm run test
 ```
 
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please fork the repository and create a pull request.
 
----
-
 ## 📄 License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
----
 
 ## 🎉 Acknowledgments
 
