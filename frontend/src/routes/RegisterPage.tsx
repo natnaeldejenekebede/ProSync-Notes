@@ -1,5 +1,15 @@
 import { useState } from 'react';
-import { Container, Paper, Box, Typography, Button, TextField } from '@mui/material';
+import {
+  Container,
+  Paper,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  IconButton,
+  InputAdornment,
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import LoadingOverlay from '../components/LoadingOverlay';
 
@@ -9,6 +19,9 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [confirmPW, setConfirmPW] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPW, setShowConfirmPW] = useState(false);
+
   const navigate = useNavigate();
 
   const handleRegister = async () => {
@@ -21,7 +34,7 @@ export default function RegisterPage() {
       const response = await fetch('http://localhost:4000/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password })
+        body: JSON.stringify({ username, email, password }),
       });
       if (!response.ok) throw new Error('Registration failed');
       alert('Registration successful! You can now login.');
@@ -42,11 +55,15 @@ export default function RegisterPage() {
           sx={{
             p: 4,
             backgroundColor: 'background.paper',
-            transition: 'background-color 0.3s ease'
+            transition: 'background-color 0.3s ease',
+            mb: 8
           }}
         >
           <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
             Register
+          </Typography>
+          <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
+            Register for an account to create & access your notes.
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
@@ -55,6 +72,7 @@ export default function RegisterPage() {
               fullWidth
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
             />
             <TextField
               label="Email"
@@ -62,25 +80,58 @@ export default function RegisterPage() {
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
             />
             <TextField
               label="Password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <TextField
               label="Confirm Password"
-              type="password"
+              type={showConfirmPW ? 'text' : 'password'}
               fullWidth
               value={confirmPW}
               onChange={(e) => setConfirmPW(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={() => setShowConfirmPW(!showConfirmPW)}
+                      edge="end"
+                    >
+                      {showConfirmPW ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button variant="contained" onClick={handleRegister} sx={{ fontWeight: 600 }}>
               Register
             </Button>
           </Box>
+          <Typography variant="body2" sx={{ mt: 4 }}>
+            Already have an account?{' '}
+            <a href="/login" style={{ color: '#00695c', textDecoration: 'underline', fontWeight: 'bold' }}>
+              Login
+            </a>
+          </Typography>
         </Paper>
       </Container>
     </>

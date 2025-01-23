@@ -409,7 +409,7 @@ export default function NotesPage() {
             </Select>
           </FormControl>
           <Button variant="outlined" onClick={applyTagFilter}>
-            Apply
+            Apply Filter
           </Button>
         </Box>
         <Grid container spacing={2}>
