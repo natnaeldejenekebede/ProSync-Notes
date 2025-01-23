@@ -8,7 +8,7 @@ import {
   IconButton,
   CircularProgress,
 } from "@mui/material";
-import { Edit as EditIcon } from "@mui/icons-material";
+import { Edit as EditIcon, Search as SearchIcon } from "@mui/icons-material";
 import LoadingOverlay from "../components/LoadingOverlay";
 
 const avatarImages = [
@@ -215,15 +215,47 @@ export default function ProfilePage() {
       }}
     >
       {/* Search Bar */}
-      <Box sx={{ mb: 4, width: "100%", maxWidth: 500 }}>
-        <TextField
-          fullWidth
-          label="Search for Other Users"
-          variant="outlined"
-          value={searchQuery}
-          onChange={(e) => handleSearchChange(e.target.value)}
-          sx={{ backgroundColor: "background.paper", borderRadius: 1 }}
-        />
+      <Box
+        sx={{
+          mb: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          width: "400px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            position: "relative",
+          }}
+        >
+          <TextField
+            fullWidth
+            label="Search for Other Users"
+            variant="outlined"
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            sx={{
+              backgroundColor: "background.paper",
+              borderRadius: 1,
+              "& .MuiInputBase-root": {
+                paddingRight: "40px",
+              },
+            }}
+          />
+          <SearchIcon
+            sx={{
+              position: "absolute",
+              right: "10px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              color: "text.secondary",
+            }}
+          />
+        </Box>
         {searchLoading && (
           <Box display="flex" justifyContent="center" mt={2}>
             <CircularProgress />
