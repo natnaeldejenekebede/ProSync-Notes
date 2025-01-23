@@ -589,6 +589,7 @@ export default function NotesPage() {
                               ? "#3f51b5"
                               : textColor,
                         }}
+                        title={ note.shared_with_user_ids.length > 0 ? `Shared with ${note.shared_with_user_ids.length} users` : "Share"}
                       >
                         <Share />
                       </IconButton>
