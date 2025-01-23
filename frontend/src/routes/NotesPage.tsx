@@ -658,6 +658,7 @@ export default function NotesPage() {
                       <IconButton
                         onClick={() => togglePinNote(note.id, note.pinned)}
                         sx={{ color: note.pinned ? "#00695c" : textColor }}
+                        title={note.pinned ? "Unpin Note" : "Pin Note"}
                       >
                         <PushPin />
                       </IconButton>
