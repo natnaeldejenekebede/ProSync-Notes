@@ -1,0 +1,278 @@
+openapi: 3.0.3
+info:
+  title: CollabNote API
+  description: >
+    Comprehensive API documentation for the CollabNote application, an intuitive collaborative notes platform.
+  version: 1.0.0
+  contact:
+    name: Son Nguyen
+    url: https://github.com/hoangsonww
+    email: hoangson091104@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:4000
+    description: Development server
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        description: User registration data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "string"
+                email:
+                  type: string
+                  example: "string"
+                password:
+                  type: string
+                  example: "string"
+      responses:
+        '201':
+          description: User successfully registered
+        '400':
+          description: Bad request
+  /auth/login:
+    post:
+      summary: Login an existing user
+      requestBody:
+        description: User login data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "string"
+                password:
+                  type: string
+                  example: "string"
+      responses:
+        '200':
+          description: User successfully logged in
+        '401':
+          description: Invalid credentials
+  /auth/check-email-exists:
+    post:
+      summary: Check if an email exists
+      requestBody:
+        description: Email to check
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "string"
+      responses:
+        '200':
+          description: Email check completed
+        '400':
+          description: Bad request
+  /auth/reset-password:
+    post:
+      summary: Reset a user's password
+      requestBody:
+        description: Password reset data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "string"
+                newPassword:
+                  type: string
+                  example: "string"
+                confirmPassword:
+                  type: string
+                  example: "string"
+      responses:
+        '200':
+          description: Password successfully reset
+        '400':
+          description: Bad request
+  /notes:
+    get:
+      summary: Retrieve user notes
+      parameters:
+        - name: search
+          in: query
+          description: Search term to filter notes
+          schema:
+            type: string
+        - name: tag
+          in: query
+          description: Tag to filter notes
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of user notes retrieved successfully
+        '401':
+          description: Unauthorized access
+    post:
+      summary: Create a new note
+      requestBody:
+        description: Details of the new note
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: "string"
+                content:
+                  type: string
+                  example: "string"
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example: ["string"]
+                dueDate:
+                  type: string
+                  format: date-time
+                  example: "2025-01-23T14:43:40.020Z"
+                color:
+                  type: string
+                  example: "string"
+      responses:
+        '201':
+          description: Note created successfully
+        '400':
+          description: Invalid input
+  /notes/{id}:
+    patch:
+      summary: Update a note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the note to update
+          schema:
+            type: string
+      requestBody:
+        description: Updates to the note
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Note updated successfully
+        '404':
+          description: Note not found
+    delete:
+      summary: Delete a note
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the note to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Note deleted successfully
+        '404':
+          description: Note not found
+  /notes/{id}/share:
+    post:
+      summary: Share a note with another user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the note to share
+          schema:
+            type: string
+      requestBody:
+        description: Target user to share the note with
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                targetUserId:
+                  type: integer
+                  example: 0
+      responses:
+        '200':
+          description: Note shared successfully
+        '404':
+          description: Note or user not found
+  /notes/reorder:
+    post:
+      summary: Reorder user notes
+      requestBody:
+        description: New order of note IDs
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                noteOrder:
+                  type: array
+                  items:
+                    type: integer
+                  example: [0]
+      responses:
+        '200':
+          description: Notes reordered successfully
+        '400':
+          description: Invalid input
+  /profile/me:
+    get:
+      summary: Retrieve the authenticated user's profile
+      responses:
+        '200':
+          description: Profile retrieved successfully
+        '401':
+          description: Unauthorized access
+  /profile/userId/{id}:
+    get:
+      summary: Retrieve a user profile by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the user to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Profile retrieved successfully
+        '404':
+          description: User not found
+  /profile/search:
+    get:
+      summary: Search for a user profile by username
+      parameters:
+        - name: username
+          in: query
+          description: Username to search for
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results returned successfully
