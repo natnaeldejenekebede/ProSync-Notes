@@ -58,6 +58,22 @@ export default function ProfilePage() {
   // @ts-ignore
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const [notesCount, setNotesCount] = useState<number | null>(null);
+
+  const fetchNotesCount = async () => {
+    try {
+      const res = await fetch("https://collabnote-fullstack-app.onrender.com/notes", {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
+      if (!res.ok) throw new Error("Failed to fetch notes count");
+      const data = await res.json();
+      setNotesCount(data.length); // Assuming the response is an array of notes
+    } catch (err) {
+      console.error(err);
+      setNotesCount(0); // Default to 0 if there's an error
+    }
+  };
+
   const fetchMyProfile = async () => {
     try {
       const res = await fetch(
@@ -162,6 +178,7 @@ export default function ProfilePage() {
       return;
     }
     fetchMyProfile().then(() => setLoading(false));
+    fetchNotesCount().then(() => setLoading(false));
   }, []);
 
   if (loading) {
@@ -365,6 +382,9 @@ export default function ProfilePage() {
         </Typography>
         <Typography sx={{ mb: 2 }}>
           <strong>Date Joined:</strong> {joinedDate}
+        </Typography>
+        <Typography sx={{ mb: 2 }}>
+          <strong>Notes Created:</strong> {notesCount !== null ? notesCount : "Loading..."}
         </Typography>
         <Typography sx={{ mb: 2 }}>
           <strong>Today's Date:</strong> {today}
