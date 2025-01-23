@@ -60,7 +60,7 @@ export default function ProfilePage() {
 
   const fetchMyProfile = async () => {
     try {
-      const res = await fetch("http://localhost:4000/profile/me", {
+      const res = await fetch("https://collabnote-fullstack-app.onrender.com/profile/me", {
         headers: { Authorization: `Bearer ${userToken}` },
       });
       if (!res.ok) throw new Error("Failed to fetch profile");
@@ -88,7 +88,7 @@ export default function ProfilePage() {
     setUpdatingEmail(true);
     setError("");
     try {
-      const res = await fetch("http://localhost:4000/profile/email", {
+      const res = await fetch("https://collabnote-fullstack-app.onrender.com/profile/email", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +118,7 @@ export default function ProfilePage() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/profile/search?username=${query}`,
+        `https://collabnote-fullstack-app.onrender.com/profile/search?username=${query}`,
         {
           headers: { Authorization: `Bearer ${userToken}` },
         },

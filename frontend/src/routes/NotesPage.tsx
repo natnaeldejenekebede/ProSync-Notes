@@ -94,7 +94,7 @@ export default function NotesPage() {
       if (search) params.append("search", search);
       if (filter) params.append("tag", filter);
       const response = await fetch(
-        `http://localhost:4000/notes?${params.toString()}`,
+        `https://collabnote-fullstack-app.onrender.com/notes?${params.toString()}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -135,7 +135,7 @@ export default function NotesPage() {
     }
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:4000/notes", {
+      const response = await fetch("https://collabnote-fullstack-app.onrender.com/notes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -166,7 +166,7 @@ export default function NotesPage() {
   const togglePinNote = async (noteId: number, currentPinned: boolean) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:4000/notes/${noteId}`, {
+      const response = await fetch(`https://collabnote-fullstack-app.onrender.com/notes/${noteId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -196,7 +196,7 @@ export default function NotesPage() {
     try {
       for (const noteId of selectedNotes) {
         const response = await fetch(
-          `http://localhost:4000/notes/${noteId}/share`,
+          `https://collabnote-fullstack-app.onrender.com/notes/${noteId}/share`,
           {
             method: "POST",
             headers: {
@@ -223,7 +223,7 @@ export default function NotesPage() {
   const removeNote = async (noteId: number) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:4000/notes/${noteId}`, {
+      const response = await fetch(`https://collabnote-fullstack-app.onrender.com/notes/${noteId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -281,7 +281,7 @@ export default function NotesPage() {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:4000/notes/${detailNote.id}`,
+        `https://collabnote-fullstack-app.onrender.com/notes/${detailNote.id}`,
         {
           method: "PATCH",
           headers: {
@@ -312,7 +312,7 @@ export default function NotesPage() {
   const reorderNotes = async (sortedIds: number[]) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:4000/notes/reorder", {
+      const response = await fetch("https://collabnote-fullstack-app.onrender.com/notes/reorder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
