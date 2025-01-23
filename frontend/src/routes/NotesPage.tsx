@@ -1000,9 +1000,7 @@ export default function NotesPage() {
                   <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
                     Due Date:
                   </Typography>
-                  <Typography
-                    sx={{ fontStyle: "italic", mb: 2 }}
-                  >
+                  <Typography sx={{ fontStyle: "italic", mb: 2 }}>
                     {detailNote?.due_date}
                   </Typography>
                 </>
@@ -1021,14 +1019,18 @@ export default function NotesPage() {
                     }}
                   >
                     {detailNote.tags.map((tag, idx) => {
-                      const preTag = PREDEFINED_TAGS.find((t) => t.label === tag);
+                      const preTag = PREDEFINED_TAGS.find(
+                        (t) => t.label === tag,
+                      );
                       return (
                         <Chip
                           key={`${detailNote?.id}-tag-${idx}`}
                           label={tag}
                           sx={{
                             bgcolor: preTag ? preTag.color : "#757575",
-                            color: getContrastingTextColor(preTag?.color || "#757575"),
+                            color: getContrastingTextColor(
+                              preTag?.color || "#757575",
+                            ),
                             fontWeight: 600,
                           }}
                         />
