@@ -4,16 +4,19 @@ import { ConfigService } from "@nestjs/config";
 import { Logger } from "@nestjs/common";
 import { Request, Response, NextFunction } from "express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
+import { join } from "path";
+import { NestExpressApplication } from "@nestjs/platform-express";
+import { serve, setup } from "swagger-ui-express";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
   const logger = new Logger("Bootstrap");
 
   // Enable CORS for all origins
   app.enableCors({
-    origin: true, // Allow all origins
-    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    origin: true,
+    credentials: true,
   });
 
   // Middleware to log all incoming requests
@@ -29,33 +32,32 @@ async function bootstrap() {
       "Comprehensive API documentation for the CollabNote application, an intuitive collaborative notes platform.",
     )
     .setVersion("1.0.0")
-    .addBearerAuth() // Add support for JWT tokens
+    .addBearerAuth()
     .setContact(
       "Son Nguyen",
       "https://github.com/hoangsonww",
       "hoangson091104@gmail.com",
-    ) // Author Contact Info
-    .setLicense("MIT", "https://opensource.org/licenses/MIT") // License Info
-    .addServer("http://localhost:4000", "Development server") // Development Server
-    .addServer("https://api.collabnote.com", "Production server") // Production Server
+    )
+    .setLicense("MIT", "https://opensource.org/licenses/MIT")
+    .addServer("http://localhost:4000", "Development server")
+    .addServer("https://collabnote-tool-backend.vercel.app/", "Production server")
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
 
-  // Set the custom site title for the Swagger UI
+  // Serve Swagger UI Static Assets
+  const swaggerUiDistPath = require("swagger-ui-dist").absolutePath();
+  app.useStaticAssets(swaggerUiDistPath);
+
+  // Set up Swagger documentation route
   SwaggerModule.setup("api", app, document, {
     customSiteTitle: "CollabNote API Documentation",
   });
 
-  const port = configService.get<number>("PORT", 4000); // Use PORT from config or default to 4000
-
+  const port = configService.get<number>("PORT", 4000);
   await app.listen(port, () => {
-    logger.log(
-      `NestJS Backend running on port ${port} and ready for cloud deployment`,
-    );
-    logger.log(
-      `Swagger API documentation available at http://localhost:${port}/api`,
-    );
+    logger.log(`NestJS Backend running on port ${port}`);
+    logger.log(`Swagger API documentation available at /api`);
   });
 }
 
