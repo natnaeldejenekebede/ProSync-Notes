@@ -30,7 +30,7 @@ import {
   Info,
   Edit,
   ArrowUpward,
-  ArrowDownward,
+  ArrowDownward, Close,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
@@ -190,9 +190,14 @@ export default function NotesPage() {
   };
 
   const openShare = (noteId: number) => {
+    const noteToShare = notes.find((note) => note.id === noteId);
+    if (noteToShare) {
+      setDetailNote(noteToShare); // Set the note details
+    }
     setSelectedNotes([noteId]);
     setOpenShareDialog(true);
   };
+
   const shareNote = async () => {
     if (!shareTargetUserId) {
       alert("Please provide a target user ID");
@@ -594,7 +599,18 @@ export default function NotesPage() {
       </Container>
 
       <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)}>
-        <DialogTitle>Share Note</DialogTitle>
+        <DialogTitle
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          Share Note
+          <IconButton onClick={() => setOpenShareDialog(false)}>
+            <Close />
+          </IconButton>
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             Enter the username of the user you want to share with:
@@ -608,13 +624,116 @@ export default function NotesPage() {
             value={shareTargetUserId}
             onChange={(e) => setShareTargetUserId(e.target.value)}
           />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenShareDialog(false)}>Cancel</Button>
-          <Button variant="contained" onClick={shareNote}>
-            Share
+          <Button
+            variant="contained"
+            sx={{ mt: 2 }}
+            fullWidth
+            onClick={shareNote}
+          >
+            Share with User
           </Button>
-        </DialogActions>
+
+          <Box sx={{ my: 3 }}>
+            <hr />
+          </Box>
+
+          <DialogContentText sx={{ mt: 2 }}>
+            Alternatively, copy the note's details or share via email or social media:
+          </DialogContentText>
+
+          {detailNote ? (
+            <Box sx={{ mt: 2 }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                Title:
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 2 }}>
+                {detailNote.title}
+              </Typography>
+              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                Content:
+              </Typography>
+              <Typography variant="body2" sx={{ whiteSpace: "pre-wrap", mb: 2 }}>
+                {detailNote.content}
+              </Typography>
+              {detailNote.due_date && (
+                <>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                    Due Date:
+                  </Typography>
+                  <Typography variant="body2" sx={{ mb: 2 }}>
+                    {detailNote.due_date}
+                  </Typography>
+                </>
+              )}
+              {detailNote.tags && detailNote.tags.length > 0 && (
+                <>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                    Tags:
+                  </Typography>
+                  <Box sx={{ mb: 2, display: "flex", gap: 1, flexWrap: "wrap" }}>
+                    {detailNote.tags.map((tag, idx) => (
+                      <Chip
+                        key={idx}
+                        label={tag}
+                        sx={{
+                          bgcolor: PREDEFINED_TAGS.find((t) => t.label === tag)
+                            ?.color || "#757575",
+                          color: "#fff",
+                          fontWeight: 600,
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </>
+              )}
+              <Button
+                variant="outlined"
+                sx={{ mr: 1 }}
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `Title: ${detailNote.title}\n\nContent: ${detailNote.content}\n\n${
+                      detailNote.due_date ? `Due Date: ${detailNote.due_date}\n\n` : ""
+                    }Tags: ${
+                      detailNote.tags ? detailNote.tags.join(", ") : "None"
+                    }`
+                  );
+                  alert("Note details copied to clipboard!");
+                }}
+              >
+                Copy All Details
+              </Button>
+              <Button
+                variant="outlined"
+                component="a"
+                href={`mailto:?subject=${encodeURIComponent(
+                  detailNote.title
+                )}&body=${encodeURIComponent(
+                  `Title: ${detailNote.title}\n\nContent: ${detailNote.content}\n\n${
+                    detailNote.due_date ? `Due Date: ${detailNote.due_date}\n\n` : ""
+                  }Tags: ${detailNote.tags ? detailNote.tags.join(", ") : "None"}`
+                )}`}
+                sx={{ mr: 1 }}
+              >
+                Share via Email
+              </Button>
+              <Button
+                variant="outlined"
+                component="a"
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                  `${detailNote.title}\n\n${detailNote.content}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Share on Twitter
+              </Button>
+            </Box>
+          ) : (
+            <Typography sx={{ mt: 2, color: "red" }}>
+              Unable to load note details for sharing.
+            </Typography>
+          )}
+        </DialogContent>
       </Dialog>
 
       <Dialog
