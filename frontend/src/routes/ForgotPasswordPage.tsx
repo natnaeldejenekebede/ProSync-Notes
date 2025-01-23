@@ -24,11 +24,14 @@ export default function ForgotPasswordPage() {
   const checkEmail = async () => {
     setLoading(true);
     try {
-      const res = await fetch("https://collabnote-fullstack-app.onrender.com/auth/check-email-exists", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      const res = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/auth/check-email-exists",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        },
+      );
       if (!res.ok) throw new Error("Error checking email");
       const data = await res.json();
       setEmailExists(data.exists);
@@ -53,15 +56,18 @@ export default function ForgotPasswordPage() {
     }
     setLoading(true);
     try {
-      const res = await fetch("https://collabnote-fullstack-app.onrender.com/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          newPassword: newPass,
-          confirmPassword: confirmPass,
-        }),
-      });
+      const res = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/auth/reset-password",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            newPassword: newPass,
+            confirmPassword: confirmPass,
+          }),
+        },
+      );
       if (!res.ok) throw new Error("Error resetting password");
       alert(
         "Password reset successful! You can now login with your new password.",

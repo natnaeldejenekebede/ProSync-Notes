@@ -135,20 +135,23 @@ export default function NotesPage() {
     }
     setLoading(true);
     try {
-      const response = await fetch("https://collabnote-fullstack-app.onrender.com/notes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/notes",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title: addTitle,
+            content: addContent,
+            color: addColor,
+            dueDate: addDueDate || null,
+            tags: addTags ? addTags.split(",").map((t) => t.trim()) : [],
+          }),
         },
-        body: JSON.stringify({
-          title: addTitle,
-          content: addContent,
-          color: addColor,
-          dueDate: addDueDate || null,
-          tags: addTags ? addTags.split(",").map((t) => t.trim()) : [],
-        }),
-      });
+      );
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText);
@@ -166,14 +169,17 @@ export default function NotesPage() {
   const togglePinNote = async (noteId: number, currentPinned: boolean) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://collabnote-fullstack-app.onrender.com/notes/${noteId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        `https://collabnote-fullstack-app.onrender.com/notes/${noteId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ pinned: !currentPinned }),
         },
-        body: JSON.stringify({ pinned: !currentPinned }),
-      });
+      );
       if (!response.ok) throw new Error("Failed to pin/unpin note");
       await response.json();
       fetchNotes(searchQuery, tagFilter);
@@ -223,10 +229,13 @@ export default function NotesPage() {
   const removeNote = async (noteId: number) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://collabnote-fullstack-app.onrender.com/notes/${noteId}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await fetch(
+        `https://collabnote-fullstack-app.onrender.com/notes/${noteId}`,
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       if (!response.ok) throw new Error("Failed to remove note");
       await response.json();
       fetchNotes(searchQuery, tagFilter);
@@ -312,14 +321,17 @@ export default function NotesPage() {
   const reorderNotes = async (sortedIds: number[]) => {
     setLoading(true);
     try {
-      const response = await fetch("https://collabnote-fullstack-app.onrender.com/notes/reorder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/notes/reorder",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ noteOrder: sortedIds }),
         },
-        body: JSON.stringify({ noteOrder: sortedIds }),
-      });
+      );
       if (!response.ok) throw new Error("Failed to reorder notes");
       await response.json();
       fetchNotes(searchQuery, tagFilter);

@@ -23,11 +23,14 @@ export default function LoginPage() {
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await fetch("https://collabnote-fullstack-app.onrender.com/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        },
+      );
       if (!response.ok) throw new Error("Login failed");
       const data = await response.json();
       localStorage.setItem("access_token", data.access_token);

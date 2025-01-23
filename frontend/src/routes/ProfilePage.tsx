@@ -60,9 +60,12 @@ export default function ProfilePage() {
 
   const fetchMyProfile = async () => {
     try {
-      const res = await fetch("https://collabnote-fullstack-app.onrender.com/profile/me", {
-        headers: { Authorization: `Bearer ${userToken}` },
-      });
+      const res = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/profile/me",
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        },
+      );
       if (!res.ok) throw new Error("Failed to fetch profile");
       const data = await res.json();
       setUserData(data);
@@ -88,14 +91,17 @@ export default function ProfilePage() {
     setUpdatingEmail(true);
     setError("");
     try {
-      const res = await fetch("https://collabnote-fullstack-app.onrender.com/profile/email", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
+      const res = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/profile/email",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
+          body: JSON.stringify({ newEmail }),
         },
-        body: JSON.stringify({ newEmail }),
-      });
+      );
       if (!res.ok) throw new Error("Failed to update email");
       setEmail(newEmail);
       setIsEditingEmail(false);

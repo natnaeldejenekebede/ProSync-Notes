@@ -53,11 +53,14 @@ export default function Navbar() {
         return;
       }
       try {
-        const resp = await fetch("https://collabnote-fullstack-app.onrender.com/profile/me", {
-          headers: {
-            Authorization: `Bearer ${t}`,
+        const resp = await fetch(
+          "https://collabnote-fullstack-app.onrender.com/profile/me",
+          {
+            headers: {
+              Authorization: `Bearer ${t}`,
+            },
           },
-        });
+        );
         if (resp.status === 401) {
           localStorage.removeItem("access_token");
           setToken(null);

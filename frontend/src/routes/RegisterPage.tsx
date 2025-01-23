@@ -31,11 +31,14 @@ export default function RegisterPage() {
     }
     setLoading(true);
     try {
-      const response = await fetch("https://collabnote-fullstack-app.onrender.com/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-      });
+      const response = await fetch(
+        "https://collabnote-fullstack-app.onrender.com/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, email, password }),
+        },
+      );
       if (!response.ok) throw new Error("Registration failed");
       alert("Registration successful! You can now login.");
       navigate("/login");
