@@ -1,16 +1,24 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Backend for CollabNote App",
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
     "start": "node dist/main.js",
     "start:dev": "ts-node src/main.ts"
   },
-  "keywords": [],
+  "keywords": [
+    "nestjs",
+    "supabase",
+    "jwt",
+    "passport",
+    "notes",
+    "collabnote",
+    "backend"
+  ],
   "author": "Son Nguyen",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@nestjs/common": "^11.0.4",
     "@nestjs/config": "^4.0.0",
