@@ -550,21 +550,34 @@ export default function NotesPage() {
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <IconButton
                       onClick={() => togglePinNote(note.id, note.pinned)}
+                      sx={{ color: note.pinned ? "#00695c" : "#000" }}
                     >
                       <PushPin />
                     </IconButton>
-                    <IconButton onClick={() => openShare(note.id)}>
+                    <IconButton
+                      onClick={() => openShare(note.id)}
+                      sx={{ color: note.shared_with_user_ids.length > 0 ? "#3f51b5" : "#000" }}
+                    >
                       <Share />
                     </IconButton>
-                    <IconButton onClick={() => removeNote(note.id)}>
+                    <IconButton
+                      onClick={() => removeNote(note.id)}
+                      sx={{ color: "#f44336" }}
+                    >
                       <Delete />
                     </IconButton>
                   </Box>
                   <Box sx={{ display: "flex", gap: 1 }}>
-                    <IconButton onClick={() => moveNoteUp(note.id)}>
+                    <IconButton
+                      onClick={() => moveNoteUp(note.id)}
+                      sx={{ color: "#000" }}
+                    >
                       <ArrowUpward />
                     </IconButton>
-                    <IconButton onClick={() => moveNoteDown(note.id)}>
+                    <IconButton
+                      onClick={() => moveNoteDown(note.id)}
+                      sx={{ color: "#000" }}
+                    >
                       <ArrowDownward />
                     </IconButton>
                   </Box>
