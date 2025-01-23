@@ -209,7 +209,7 @@ export default function NotesPage() {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({ targetUserId: Number(shareTargetUserId) }),
+            body: JSON.stringify({ targetUsername: shareTargetUserId }),
           },
         );
         if (!response.ok) throw new Error("Failed to share note");
@@ -556,7 +556,12 @@ export default function NotesPage() {
                     </IconButton>
                     <IconButton
                       onClick={() => openShare(note.id)}
-                      sx={{ color: note.shared_with_user_ids.length > 0 ? "#3f51b5" : "#000" }}
+                      sx={{
+                        color:
+                          note.shared_with_user_ids.length > 0
+                            ? "#3f51b5"
+                            : "#000",
+                      }}
                     >
                       <Share />
                     </IconButton>
@@ -592,14 +597,14 @@ export default function NotesPage() {
         <DialogTitle>Share Note</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Enter the user ID to share with:
+            Enter the username of the user you want to share with:
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            label="User ID"
+            label="Username"
             fullWidth
-            type="number"
+            type="text"
             value={shareTargetUserId}
             onChange={(e) => setShareTargetUserId(e.target.value)}
           />

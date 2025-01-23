@@ -20,10 +20,12 @@ import {
   ApiBody,
   ApiQuery,
   ApiParam,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 
 @ApiTags("Notes") // Group endpoints under the "Notes" category
 @Controller("notes")
+@ApiBearerAuth()
 export class NotesController {
   constructor(private readonly notesService: NotesService) {}
 
@@ -124,13 +126,13 @@ export class NotesController {
   @ApiResponse({ status: 404, description: "Note not found or user not found" })
   @ApiParam({ name: "id", description: "ID of the note to share" })
   @ApiBody({
-    description: "Target user to share the note with",
+    description: "Target username of the user to share the note with",
     schema: {
       type: "object",
       properties: {
-        targetUserId: {
-          type: "number",
-          description: "ID of the user to share the note with",
+        targetUsername: {
+          type: "string",
+          description: "Username of the user to share the note with",
         },
       },
     },

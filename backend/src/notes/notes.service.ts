@@ -117,7 +117,7 @@ export class NotesService {
   async shareNoteWithUser(
     noteId: number,
     ownerId: number,
-    targetUserName: string
+    targetUserName: string,
   ) {
     // Get user ID from username
     const targetUserId = await this.getUserIdFromUsername(targetUserName);

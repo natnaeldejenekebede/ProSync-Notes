@@ -15,9 +15,11 @@ import {
   ApiResponse,
   ApiParam,
   ApiQuery,
+  ApiBearerAuth,
 } from "@nestjs/swagger";
 
 @ApiTags("Profile") // Group all profile-related endpoints under "Profile"
+@ApiBearerAuth()
 @Controller("profile")
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) {}
