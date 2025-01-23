@@ -1065,6 +1065,12 @@ export default function NotesPage() {
                       borderColor: "#000000 !important", // Black border
                     },
                   },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000 !important", // Black label text
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#000000 !important", // Black label text when focused
+                  },
                 }}
               />
               <TextField
