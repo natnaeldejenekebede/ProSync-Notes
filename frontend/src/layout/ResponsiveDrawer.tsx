@@ -76,9 +76,7 @@ export default function ResponsiveDrawer({
             sx={{
               fontWeight: isActive("/notes") ? "bold" : "normal",
               color: isActive("/notes") ? "white" : "text.primary",
-              backgroundColor: isActive("/notes")
-                ? "#00695c"
-                : "transparent",
+              backgroundColor: isActive("/notes") ? "#00695c" : "transparent",
               "&:hover": {
                 backgroundColor: "primary.light",
               },
@@ -94,9 +92,7 @@ export default function ResponsiveDrawer({
             sx={{
               fontWeight: isActive("/profile") ? "bold" : "normal",
               color: isActive("/profile") ? "white" : "text.primary",
-              backgroundColor: isActive("/profile")
-                ? "#00695c"
-                : "transparent",
+              backgroundColor: isActive("/profile") ? "#00695c" : "transparent",
               "&:hover": {
                 backgroundColor: "primary.light",
               },
