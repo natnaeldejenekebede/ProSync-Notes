@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from "react";
 import {
   Container,
   Typography,
@@ -20,8 +20,8 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Chip
-} from '@mui/material';
+  Chip,
+} from "@mui/material";
 import {
   Delete,
   PushPin,
@@ -30,16 +30,16 @@ import {
   Info,
   Edit,
   ArrowUpward,
-  ArrowDownward
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import LoadingOverlay from '../components/LoadingOverlay';
+  ArrowDownward,
+} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import LoadingOverlay from "../components/LoadingOverlay";
 
 const PREDEFINED_TAGS: { label: string; color: string }[] = [
-  { label: 'Work', color: '#F44336' },
-  { label: 'Personal', color: '#3F51B5' },
-  { label: 'Urgent', color: '#FF9800' },
-  { label: 'Leisure', color: '#9C27B0' }
+  { label: "Work", color: "#F44336" },
+  { label: "Personal", color: "#3F51B5" },
+  { label: "Urgent", color: "#FF9800" },
+  { label: "Leisure", color: "#9C27B0" },
 ];
 
 type Note = {
@@ -58,9 +58,9 @@ type Note = {
 export default function NotesPage() {
   const [notes, setNotes] = useState<Note[]>([]);
   const [selectedNotes, setSelectedNotes] = useState<number[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [tagFilter, setTagFilter] = useState('');
-  const [shareTargetUserId, setShareTargetUserId] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [tagFilter, setTagFilter] = useState("");
+  const [shareTargetUserId, setShareTargetUserId] = useState("");
   const [openShareDialog, setOpenShareDialog] = useState(false);
 
   const [openDetailDialog, setOpenDetailDialog] = useState(false);
@@ -68,21 +68,21 @@ export default function NotesPage() {
   const [editMode, setEditMode] = useState(false);
 
   const [openAddDialog, setOpenAddDialog] = useState(false);
-  const [addTitle, setAddTitle] = useState('');
-  const [addContent, setAddContent] = useState('');
-  const [addColor, setAddColor] = useState('#ffffff');
-  const [addDueDate, setAddDueDate] = useState('');
-  const [addTags, setAddTags] = useState('');
+  const [addTitle, setAddTitle] = useState("");
+  const [addContent, setAddContent] = useState("");
+  const [addColor, setAddColor] = useState("#ffffff");
+  const [addDueDate, setAddDueDate] = useState("");
+  const [addTags, setAddTags] = useState("");
 
-  const [editTitle, setEditTitle] = useState('');
-  const [editContent, setEditContent] = useState('');
-  const [editColor, setEditColor] = useState('#ffffff');
-  const [editDueDate, setEditDueDate] = useState('');
-  const [editTags, setEditTags] = useState('');
+  const [editTitle, setEditTitle] = useState("");
+  const [editContent, setEditContent] = useState("");
+  const [editColor, setEditColor] = useState("#ffffff");
+  const [editDueDate, setEditDueDate] = useState("");
+  const [editTags, setEditTags] = useState("");
 
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem("access_token");
   const isLoggedIn = !!token;
   const navigate = useNavigate();
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -91,16 +91,19 @@ export default function NotesPage() {
     setLoading(true);
     try {
       const params = new URLSearchParams();
-      if (search) params.append('search', search);
-      if (filter) params.append('tag', filter);
-      const response = await fetch(`http://localhost:4000/notes?${params.toString()}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      if (search) params.append("search", search);
+      if (filter) params.append("tag", filter);
+      const response = await fetch(
+        `http://localhost:4000/notes?${params.toString()}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
       if (response.status === 401) {
-        navigate('/login');
+        navigate("/login");
         return;
       }
-      if (!response.ok) throw new Error('Failed to fetch notes');
+      if (!response.ok) throw new Error("Failed to fetch notes");
       const data = await response.json();
       setNotes(data);
     } catch (err) {
@@ -119,32 +122,32 @@ export default function NotesPage() {
   };
   const handleCloseAdd = () => {
     setOpenAddDialog(false);
-    setAddTitle('');
-    setAddContent('');
-    setAddColor('#ffffff');
-    setAddDueDate('');
-    setAddTags('');
+    setAddTitle("");
+    setAddContent("");
+    setAddColor("#ffffff");
+    setAddDueDate("");
+    setAddTags("");
   };
   const createNote = async () => {
     if (!addTitle.trim() || !addContent.trim()) {
-      alert('Title and Content are required!');
+      alert("Title and Content are required!");
       return;
     }
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:4000/notes', {
-        method: 'POST',
+      const response = await fetch("http://localhost:4000/notes", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           title: addTitle,
           content: addContent,
           color: addColor,
           dueDate: addDueDate || null,
-          tags: addTags ? addTags.split(',').map((t) => t.trim()) : []
-        })
+          tags: addTags ? addTags.split(",").map((t) => t.trim()) : [],
+        }),
       });
       if (!response.ok) {
         const errorText = await response.text();
@@ -164,14 +167,14 @@ export default function NotesPage() {
     setLoading(true);
     try {
       const response = await fetch(`http://localhost:4000/notes/${noteId}`, {
-        method: 'PATCH',
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ pinned: !currentPinned })
+        body: JSON.stringify({ pinned: !currentPinned }),
       });
-      if (!response.ok) throw new Error('Failed to pin/unpin note');
+      if (!response.ok) throw new Error("Failed to pin/unpin note");
       await response.json();
       fetchNotes(searchQuery, tagFilter);
     } catch (err) {
@@ -186,24 +189,27 @@ export default function NotesPage() {
   };
   const shareNote = async () => {
     if (!shareTargetUserId) {
-      alert('Please provide a target user ID');
+      alert("Please provide a target user ID");
       return;
     }
     setLoading(true);
     try {
       for (const noteId of selectedNotes) {
-        const response = await fetch(`http://localhost:4000/notes/${noteId}/share`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+        const response = await fetch(
+          `http://localhost:4000/notes/${noteId}/share`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ targetUserId: Number(shareTargetUserId) }),
           },
-          body: JSON.stringify({ targetUserId: Number(shareTargetUserId) })
-        });
-        if (!response.ok) throw new Error('Failed to share note');
+        );
+        if (!response.ok) throw new Error("Failed to share note");
         await response.json();
       }
-      setShareTargetUserId('');
+      setShareTargetUserId("");
       setOpenShareDialog(false);
       setSelectedNotes([]);
       fetchNotes(searchQuery, tagFilter);
@@ -218,10 +224,10 @@ export default function NotesPage() {
     setLoading(true);
     try {
       const response = await fetch(`http://localhost:4000/notes/${noteId}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` }
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
       });
-      if (!response.ok) throw new Error('Failed to remove note');
+      if (!response.ok) throw new Error("Failed to remove note");
       await response.json();
       fetchNotes(searchQuery, tagFilter);
     } catch (err) {
@@ -238,7 +244,9 @@ export default function NotesPage() {
 
   const handleSelectNote = (noteId: number) => {
     setSelectedNotes((prev) =>
-      prev.includes(noteId) ? prev.filter((id) => id !== noteId) : [...prev, noteId]
+      prev.includes(noteId)
+        ? prev.filter((id) => id !== noteId)
+        : [...prev, noteId],
     );
   };
 
@@ -253,11 +261,11 @@ export default function NotesPage() {
   };
   useEffect(() => {
     if (detailNote) {
-      setEditTitle(detailNote.title || '');
-      setEditContent(detailNote.content || '');
-      setEditColor(detailNote.color || '#ffffff');
-      setEditDueDate(detailNote.due_date || '');
-      setEditTags(detailNote.tags?.join(', ') || '');
+      setEditTitle(detailNote.title || "");
+      setEditContent(detailNote.content || "");
+      setEditColor(detailNote.color || "#ffffff");
+      setEditDueDate(detailNote.due_date || "");
+      setEditTags(detailNote.tags?.join(", ") || "");
     }
   }, [detailNote]);
 
@@ -267,26 +275,29 @@ export default function NotesPage() {
   const saveEditedNote = async () => {
     if (!detailNote) return;
     if (!editTitle.trim() || !editContent.trim()) {
-      alert('Title and Content are required!');
+      alert("Title and Content are required!");
       return;
     }
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:4000/notes/${detailNote.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+      const response = await fetch(
+        `http://localhost:4000/notes/${detailNote.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title: editTitle,
+            content: editContent,
+            color: editColor,
+            due_date: editDueDate || null,
+            tags: editTags ? editTags.split(",").map((t) => t.trim()) : [],
+          }),
         },
-        body: JSON.stringify({
-          title: editTitle,
-          content: editContent,
-          color: editColor,
-          due_date: editDueDate || null,
-          tags: editTags ? editTags.split(',').map((t) => t.trim()) : []
-        })
-      });
-      if (!response.ok) throw new Error('Failed to update note');
+      );
+      if (!response.ok) throw new Error("Failed to update note");
       await response.json();
       fetchNotes(searchQuery, tagFilter);
       setEditMode(false);
@@ -301,15 +312,15 @@ export default function NotesPage() {
   const reorderNotes = async (sortedIds: number[]) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:4000/notes/reorder', {
-        method: 'POST',
+      const response = await fetch("http://localhost:4000/notes/reorder", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ noteOrder: sortedIds })
+        body: JSON.stringify({ noteOrder: sortedIds }),
       });
-      if (!response.ok) throw new Error('Failed to reorder notes');
+      if (!response.ok) throw new Error("Failed to reorder notes");
       await response.json();
       fetchNotes(searchQuery, tagFilter);
     } catch (err) {
@@ -341,9 +352,9 @@ export default function NotesPage() {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate('/login');
+      navigate("/login");
     } else {
-      fetchNotes('', tagFilter);
+      fetchNotes("", tagFilter);
     }
   }, [isLoggedIn]);
 
@@ -364,10 +375,14 @@ export default function NotesPage() {
       <LoadingOverlay loading={loading} />
       <Container maxWidth="lg" sx={{ pt: 4, pb: 4 }}>
         <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
-          Good {new Date().getHours() < 12 ? 'Morning' : 'Afternoon'}
+          Good {new Date().getHours() < 12 ? "Morning" : "Afternoon"}
         </Typography>
-        <Box sx={{ mb: 2, display: 'flex', gap: 2 }}>
-          <Button variant="contained" onClick={handleOpenAdd} sx={{ fontWeight: 600 }}>
+        <Box sx={{ mb: 2, display: "flex", gap: 2 }}>
+          <Button
+            variant="contained"
+            onClick={handleOpenAdd}
+            sx={{ fontWeight: 600 }}
+          >
             Add Note
           </Button>
           {selectedNotes.length > 0 && (
@@ -381,14 +396,22 @@ export default function NotesPage() {
             </Button>
           )}
         </Box>
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 2, mb: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 2,
+            mb: 3,
+          }}
+        >
           <TextField
             size="small"
             placeholder="Search notes..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             InputProps={{
-              startAdornment: <Search sx={{ mr: 1 }} />
+              startAdornment: <Search sx={{ mr: 1 }} />,
             }}
           />
           <FormControl size="small" sx={{ width: 150 }}>
@@ -401,11 +424,13 @@ export default function NotesPage() {
               <MenuItem value="">
                 <em>None</em>
               </MenuItem>
-              {Array.from(new Set(notes.flatMap((n) => n.tags ?? []))).map((tag, i) => (
-                <MenuItem key={`tag-${tag}-${i}`} value={tag}>
-                  {tag}
-                </MenuItem>
-              ))}
+              {Array.from(new Set(notes.flatMap((n) => n.tags ?? []))).map(
+                (tag, i) => (
+                  <MenuItem key={`tag-${tag}-${i}`} value={tag}>
+                    {tag}
+                  </MenuItem>
+                ),
+              )}
             </Select>
           </FormControl>
           <Button variant="outlined" onClick={applyTagFilter}>
@@ -417,43 +442,43 @@ export default function NotesPage() {
             <Grid key={note.id} item xs={12} sm={6} md={4} lg={3}>
               <Card
                 sx={{
-                  backgroundColor: note.color || '#ffffff',
-                  position: 'relative',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                  '&:hover': {
-                    transform: 'translateY(-4px)',
-                    boxShadow: 6
-                  }
+                  backgroundColor: note.color || "#ffffff",
+                  position: "relative",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                  "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: 6,
+                  },
                 }}
               >
-                <Box sx={{ position: 'absolute', top: 8, left: 8, zIndex: 10 }}>
+                <Box sx={{ position: "absolute", top: 8, left: 8, zIndex: 10 }}>
                   <Checkbox
                     checked={selectedNotes.includes(note.id)}
                     onChange={() => handleSelectNote(note.id)}
                     color="default"
                     sx={{
-                      color: '#000',
-                      bgcolor: '#fff',
-                      borderRadius: '4px'
+                      color: "#000",
+                      bgcolor: "#fff",
+                      borderRadius: "4px",
                     }}
                   />
                 </Box>
                 <CardContent
                   onClick={() => openDetail(note)}
                   sx={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                     pt: 5,
-                    mt: 2
+                    mt: 2,
                   }}
                 >
                   <Typography
                     variant="h6"
                     sx={{
                       fontWeight: 600,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      color: '#000'
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      color: "#000",
                     }}
                   >
                     {note.title}
@@ -462,13 +487,13 @@ export default function NotesPage() {
                     variant="body2"
                     sx={{
                       mt: 1,
-                      maxHeight: '6em',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      display: '-webkit-box',
+                      maxHeight: "6em",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
                       WebkitLineClamp: 3,
-                      WebkitBoxOrient: 'vertical',
-                      color: '#000'
+                      WebkitBoxOrient: "vertical",
+                      color: "#000",
                     }}
                   >
                     {note.content}
@@ -477,27 +502,31 @@ export default function NotesPage() {
                     <Typography
                       variant="caption"
                       sx={{
-                        display: 'block',
+                        display: "block",
                         mt: 1,
-                        fontStyle: 'italic',
-                        color: '#000'
+                        fontStyle: "italic",
+                        color: "#000",
                       }}
                     >
                       Due: {note.due_date}
                     </Typography>
                   )}
                   {note.tags && note.tags.length > 0 && (
-                    <Box sx={{ mt: 1, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    <Box
+                      sx={{ mt: 1, display: "flex", flexWrap: "wrap", gap: 1 }}
+                    >
                       {note.tags.map((tag, idx) => {
-                        const preTag = PREDEFINED_TAGS.find((t) => t.label === tag);
+                        const preTag = PREDEFINED_TAGS.find(
+                          (t) => t.label === tag,
+                        );
                         return (
                           <Chip
                             key={`${note.id}-tag-${idx}`}
                             label={tag}
                             sx={{
-                              bgcolor: preTag ? preTag.color : '#757575',
-                              color: '#fff',
-                              fontWeight: 600
+                              bgcolor: preTag ? preTag.color : "#757575",
+                              color: "#fff",
+                              fontWeight: 600,
                             }}
                           />
                         );
@@ -505,9 +534,11 @@ export default function NotesPage() {
                     </Box>
                   )}
                 </CardContent>
-                <CardActions sx={{ justifyContent: 'space-between' }}>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    <IconButton onClick={() => togglePinNote(note.id, note.pinned)}>
+                <CardActions sx={{ justifyContent: "space-between" }}>
+                  <Box sx={{ display: "flex", gap: 1 }}>
+                    <IconButton
+                      onClick={() => togglePinNote(note.id, note.pinned)}
+                    >
                       <PushPin />
                     </IconButton>
                     <IconButton onClick={() => openShare(note.id)}>
@@ -517,7 +548,7 @@ export default function NotesPage() {
                       <Delete />
                     </IconButton>
                   </Box>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Box sx={{ display: "flex", gap: 1 }}>
                     <IconButton onClick={() => moveNoteUp(note.id)}>
                       <ArrowUpward />
                     </IconButton>
@@ -535,7 +566,9 @@ export default function NotesPage() {
       <Dialog open={openShareDialog} onClose={() => setOpenShareDialog(false)}>
         <DialogTitle>Share Note</DialogTitle>
         <DialogContent>
-          <DialogContentText>Enter the user ID to share with:</DialogContentText>
+          <DialogContentText>
+            Enter the user ID to share with:
+          </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -554,12 +587,17 @@ export default function NotesPage() {
         </DialogActions>
       </Dialog>
 
-      <Dialog open={openDetailDialog} onClose={closeDetail} maxWidth="sm" fullWidth>
+      <Dialog
+        open={openDetailDialog}
+        onClose={closeDetail}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           {editMode ? (
@@ -568,12 +606,10 @@ export default function NotesPage() {
               fullWidth
               value={editTitle}
               onChange={(e) => setEditTitle(e.target.value)}
-              sx={{ color: '#000' }}
+              sx={{ color: "#000" }}
             />
           ) : (
-            <Typography sx={{ color: '#000' }}>
-              {detailNote?.title}
-            </Typography>
+            <Typography sx={{ color: "#000" }}>{detailNote?.title}</Typography>
           )}
           <IconButton onClick={handleToggleEdit} title="Edit">
             <Edit />
@@ -582,8 +618,8 @@ export default function NotesPage() {
         <DialogContent
           dividers
           sx={{
-            backgroundColor: editMode ? '#fff' : detailNote?.color || '#ffffff',
-            transition: 'background-color 0.2s'
+            backgroundColor: editMode ? "#fff" : detailNote?.color || "#ffffff",
+            transition: "background-color 0.2s",
           }}
         >
           {editMode ? (
@@ -593,7 +629,7 @@ export default function NotesPage() {
                 multiline
                 rows={4}
                 fullWidth
-                sx={{ mb: 2, color: '#000' }}
+                sx={{ mb: 2, color: "#000" }}
                 value={editContent}
                 onChange={(e) => setEditContent(e.target.value)}
               />
@@ -602,7 +638,7 @@ export default function NotesPage() {
                 type="date"
                 fullWidth
                 InputLabelProps={{ shrink: true }}
-                sx={{ mb: 2, color: '#000' }}
+                sx={{ mb: 2, color: "#000" }}
                 value={editDueDate}
                 onChange={(e) => setEditDueDate(e.target.value)}
               />
@@ -617,23 +653,26 @@ export default function NotesPage() {
               <TextField
                 label="Tags (comma separated)"
                 fullWidth
-                sx={{ mb: 2, color: '#000' }}
+                sx={{ mb: 2, color: "#000" }}
                 value={editTags}
                 onChange={(e) => setEditTags(e.target.value)}
               />
             </>
           ) : (
             <>
-              <DialogContentText sx={{ whiteSpace: 'pre-wrap', color: '#000' }}>
+              <DialogContentText sx={{ whiteSpace: "pre-wrap", color: "#000" }}>
                 {detailNote?.content}
               </DialogContentText>
               {detailNote?.due_date && (
-                <Typography variant="body2" sx={{ mt: 2, color: '#000', fontStyle: 'italic' }}>
+                <Typography
+                  variant="body2"
+                  sx={{ mt: 2, color: "#000", fontStyle: "italic" }}
+                >
                   Due: {detailNote?.due_date}
                 </Typography>
               )}
               {(detailNote?.tags ?? []).length > 0 && (
-                <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                <Box sx={{ mt: 2, display: "flex", flexWrap: "wrap", gap: 1 }}>
                   {(detailNote?.tags ?? []).map((tag, idx) => {
                     const preTag = PREDEFINED_TAGS.find((t) => t.label === tag);
                     return (
@@ -641,9 +680,9 @@ export default function NotesPage() {
                         key={`${detailNote?.id}-tag-${idx}`}
                         label={tag}
                         sx={{
-                          bgcolor: preTag ? preTag.color : '#757575',
-                          color: '#fff',
-                          fontWeight: 600
+                          bgcolor: preTag ? preTag.color : "#757575",
+                          color: "#fff",
+                          fontWeight: 600,
                         }}
                       />
                     );
@@ -670,13 +709,13 @@ export default function NotesPage() {
           <DialogContentText sx={{ mb: 2 }}>
             Fill out the fields below to create a new note.
           </DialogContentText>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
               label="Title"
               fullWidth
               value={addTitle}
               onChange={(e) => setAddTitle(e.target.value)}
-              sx={{ color: '#000' }}
+              sx={{ color: "#000" }}
             />
             <TextField
               label="Content"
@@ -685,7 +724,7 @@ export default function NotesPage() {
               rows={3}
               value={addContent}
               onChange={(e) => setAddContent(e.target.value)}
-              sx={{ color: '#000' }}
+              sx={{ color: "#000" }}
             />
             <TextField
               label="Tags (predefined or custom)"
@@ -694,7 +733,7 @@ export default function NotesPage() {
               helperText="Select predefined tags: Work, Leisure, Urgent, or add your own."
               value={addTags}
               onChange={(e) => setAddTags(e.target.value)}
-              sx={{ color: '#000' }}
+              sx={{ color: "#000" }}
             />
             <TextField
               type="date"
@@ -703,7 +742,7 @@ export default function NotesPage() {
               InputLabelProps={{ shrink: true }}
               value={addDueDate}
               onChange={(e) => setAddDueDate(e.target.value)}
-              sx={{ color: '#000' }}
+              sx={{ color: "#000" }}
             />
             <TextField
               type="color"
@@ -721,7 +760,6 @@ export default function NotesPage() {
           </Button>
         </DialogActions>
       </Dialog>
-
     </>
   );
 }

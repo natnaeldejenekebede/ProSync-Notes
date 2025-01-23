@@ -1,11 +1,11 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './layout/Layout';
-import HomePage from './routes/HomePage';
-import LoginPage from './routes/LoginPage';
-import RegisterPage from './routes/RegisterPage';
-import ForgotPasswordPage from './routes/ForgotPasswordPage';
-import NotesPage from './routes/NotesPage';
-import ProfilePage from './routes/ProfilePage';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./layout/Layout";
+import HomePage from "./routes/HomePage";
+import LoginPage from "./routes/LoginPage";
+import RegisterPage from "./routes/RegisterPage";
+import ForgotPasswordPage from "./routes/ForgotPasswordPage";
+import NotesPage from "./routes/NotesPage";
+import ProfilePage from "./routes/ProfilePage";
 import NotFoundPage from "./routes/NotFoundPage.tsx";
 
 export default function App() {

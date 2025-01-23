@@ -9,18 +9,18 @@ import {
   Typography,
   Switch,
   FormControlLabel,
-} from '@mui/material';
-import { Close } from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
+} from "@mui/material";
+import { Close } from "@mui/icons-material";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function ResponsiveDrawer({
-                                           open,
-                                           onClose,
-                                           isLoggedIn,
-                                           onLogout,
-                                           toggleTheme,
-                                           isDarkMode,
-                                         }: {
+  open,
+  onClose,
+  isLoggedIn,
+  onLogout,
+  toggleTheme,
+  isDarkMode,
+}: {
   open: boolean;
   onClose: () => void;
   isLoggedIn: boolean;
@@ -38,31 +38,31 @@ export default function ResponsiveDrawer({
       <Box sx={{ width: 250 }}>
         <Toolbar
           sx={{
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: 'primary.main',
-            color: '#fff',
+            justifyContent: "space-between",
+            alignItems: "center",
+            backgroundColor: "primary.main",
+            color: "#fff",
           }}
         >
           <Typography variant="h6" sx={{ fontWeight: 600 }}>
             CollabNote
           </Typography>
-          <IconButton onClick={onClose} sx={{ color: '#fff' }}>
+          <IconButton onClick={onClose} sx={{ color: "#fff" }}>
             <Close />
           </IconButton>
         </Toolbar>
         <List>
           <ListItemButton
             onClick={() => {
-              navigate('/');
+              navigate("/");
               onClose();
             }}
             sx={{
-              fontWeight: isActive('/') ? 'bold' : 'normal',
-              color: isActive('/') ? 'white' : 'text.primary',
-              backgroundColor: isActive('/') ? 'primary.light' : 'transparent',
-              '&:hover': {
-                backgroundColor: 'primary.light',
+              fontWeight: isActive("/") ? "bold" : "normal",
+              color: isActive("/") ? "white" : "text.primary",
+              backgroundColor: isActive("/") ? "primary.light" : "transparent",
+              "&:hover": {
+                backgroundColor: "primary.light",
               },
             }}
           >
@@ -70,15 +70,17 @@ export default function ResponsiveDrawer({
           </ListItemButton>
           <ListItemButton
             onClick={() => {
-              navigate('/profile');
+              navigate("/profile");
               onClose();
             }}
             sx={{
-              fontWeight: isActive('/profile') ? 'bold' : 'normal',
-              color: isActive('/profile') ? 'white' : 'text.primary',
-              backgroundColor: isActive('/profile') ? 'primary.light' : 'transparent',
-              '&:hover': {
-                backgroundColor: 'primary.light',
+              fontWeight: isActive("/profile") ? "bold" : "normal",
+              color: isActive("/profile") ? "white" : "text.primary",
+              backgroundColor: isActive("/profile")
+                ? "primary.light"
+                : "transparent",
+              "&:hover": {
+                backgroundColor: "primary.light",
               },
             }}
           >
@@ -88,15 +90,17 @@ export default function ResponsiveDrawer({
             <>
               <ListItemButton
                 onClick={() => {
-                  navigate('/notes');
+                  navigate("/notes");
                   onClose();
                 }}
                 sx={{
-                  fontWeight: isActive('/notes') ? 'bold' : 'normal',
-                  color: isActive('/notes') ? 'white' : 'text.primary',
-                  backgroundColor: isActive('/notes') ? 'primary.light' : 'transparent',
-                  '&:hover': {
-                    backgroundColor: 'primary.light',
+                  fontWeight: isActive("/notes") ? "bold" : "normal",
+                  color: isActive("/notes") ? "white" : "text.primary",
+                  backgroundColor: isActive("/notes")
+                    ? "primary.light"
+                    : "transparent",
+                  "&:hover": {
+                    backgroundColor: "primary.light",
                   },
                 }}
               >
@@ -108,22 +112,24 @@ export default function ResponsiveDrawer({
                   onClose();
                 }}
               >
-                <ListItemText primary="Logout" sx={{ color: 'red' }} />
+                <ListItemText primary="Logout" sx={{ color: "red" }} />
               </ListItemButton>
             </>
           ) : (
             <>
               <ListItemButton
                 onClick={() => {
-                  navigate('/login');
+                  navigate("/login");
                   onClose();
                 }}
                 sx={{
-                  fontWeight: isActive('/login') ? 'bold' : 'normal',
-                  color: isActive('/login') ? 'white' : 'text.primary',
-                  backgroundColor: isActive('/login') ? 'primary.light' : 'transparent',
-                  '&:hover': {
-                    backgroundColor: 'primary.light',
+                  fontWeight: isActive("/login") ? "bold" : "normal",
+                  color: isActive("/login") ? "white" : "text.primary",
+                  backgroundColor: isActive("/login")
+                    ? "primary.light"
+                    : "transparent",
+                  "&:hover": {
+                    backgroundColor: "primary.light",
                   },
                 }}
               >
@@ -131,20 +137,26 @@ export default function ResponsiveDrawer({
               </ListItemButton>
               <ListItemButton
                 onClick={() => {
-                  navigate('/register');
+                  navigate("/register");
                   onClose();
                 }}
                 sx={{
-                  borderBottom: isActive('/register') ? '3px solid #00695c' : 'none',
-                  fontWeight: isActive('/register') ? 'bold' : 'normal',
-                  color: isActive('/register') ? 'primary.main' : 'text.primary',
+                  borderBottom: isActive("/register")
+                    ? "3px solid #00695c"
+                    : "none",
+                  fontWeight: isActive("/register") ? "bold" : "normal",
+                  color: isActive("/register")
+                    ? "primary.main"
+                    : "text.primary",
                 }}
               >
                 <ListItemText primary="Register" />
               </ListItemButton>
             </>
           )}
-          <div style={{ borderBottom: '1px solid #f0f0f0', margin: '8px 16px' }} />
+          <div
+            style={{ borderBottom: "1px solid #f0f0f0", margin: "8px 16px" }}
+          />
           <ListItemButton>
             <FormControlLabel
               control={
@@ -156,7 +168,7 @@ export default function ResponsiveDrawer({
                   }}
                 />
               }
-              label={isDarkMode ? 'Dark Mode' : 'Light Mode'}
+              label={isDarkMode ? "Dark Mode" : "Light Mode"}
               sx={{ ml: 1 }}
             />
           </ListItemButton>

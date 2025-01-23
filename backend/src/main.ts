@@ -1,14 +1,14 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ConfigService } from '@nestjs/config';
-import { Logger } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { ConfigService } from "@nestjs/config";
+import { Logger } from "@nestjs/common";
+import { Request, Response, NextFunction } from "express";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const logger = new Logger('Bootstrap');
+  const logger = new Logger("Bootstrap");
 
   // Enable CORS for all origins
   app.enableCors({
@@ -24,18 +24,20 @@ async function bootstrap() {
 
   // Swagger Setup
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('CollabNote API')
-    .setDescription('API documentation for the CollabNote app')
-    .setVersion('1.0.0')
+    .setTitle("CollabNote API")
+    .setDescription("API documentation for the CollabNote app")
+    .setVersion("1.0.0")
     .addBearerAuth() // Add support for JWT tokens
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup("api", app, document);
 
-  const port = configService.get<number>('PORT', 4000); // Use PORT from config or default to 4000
+  const port = configService.get<number>("PORT", 4000); // Use PORT from config or default to 4000
 
   await app.listen(port, () => {
-    logger.log(`NestJS Backend running on port ${port} and ready for cloud deployment`);
+    logger.log(
+      `NestJS Backend running on port ${port} and ready for cloud deployment`,
+    );
     logger.log(`Swagger API documentation available at ${port}/api`);
   });
 }

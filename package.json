@@ -8,7 +8,10 @@
     "start": "cd frontend && vite && cd ../backend && npm run start:dev",
     "frontend": "cd frontend && vite",
     "backend": "cd backend && npm run start:dev",
-    "install": "cd frontend && npm install && cd ../backend && npm install"
+    "format": "prettier --write \"**/*.{js,ts,tsx,json,css,html}\""
   },
-  "private": false
+  "private": false,
+  "dependencies": {
+    "prettier": "^3.4.2"
+  }
 }

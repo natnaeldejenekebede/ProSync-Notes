@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import {
   Box,
   Paper,
@@ -7,61 +7,63 @@ import {
   Button,
   IconButton,
   CircularProgress,
-} from '@mui/material';
-import { Edit as EditIcon } from '@mui/icons-material';
-import LoadingOverlay from '../components/LoadingOverlay';
+} from "@mui/material";
+import { Edit as EditIcon } from "@mui/icons-material";
+import LoadingOverlay from "../components/LoadingOverlay";
 
 const avatarImages = [
-  '/OIP.jpg',
-  '/OIP2.webp',
-  '/OIP3.png',
-  '/OIP4.png',
-  '/OIP5.png',
-  '/OIP6.webp',
-  '/OIP7.webp',
-  '/OIP8.webp',
-  '/OIP9.webp',
-  '/OIP10.webp',
-  '/OIP11.webp',
-  '/OIP12.webp',
-  '/OIP13.webp',
-  '/OIP14.webp',
-  '/OIP15.webp',
-  '/OIP16.webp',
-  '/OIP17.webp',
-  '/OIP18.webp',
-  '/OIP19.webp',
-  '/OIP20.webp',
+  "/OIP.jpg",
+  "/OIP2.webp",
+  "/OIP3.png",
+  "/OIP4.png",
+  "/OIP5.png",
+  "/OIP6.webp",
+  "/OIP7.webp",
+  "/OIP8.webp",
+  "/OIP9.webp",
+  "/OIP10.webp",
+  "/OIP11.webp",
+  "/OIP12.webp",
+  "/OIP13.webp",
+  "/OIP14.webp",
+  "/OIP15.webp",
+  "/OIP16.webp",
+  "/OIP17.webp",
+  "/OIP18.webp",
+  "/OIP19.webp",
+  "/OIP20.webp",
 ];
 
 export default function ProfilePage() {
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [isEditingEmail, setIsEditingEmail] = useState(false);
-  const [newEmail, setNewEmail] = useState('');
-  const [daysSinceJoined, setDaysSinceJoined] = useState<number | string | null>(null);
+  const [newEmail, setNewEmail] = useState("");
+  const [daysSinceJoined, setDaysSinceJoined] = useState<
+    number | string | null
+  >(null);
   const [loading, setLoading] = useState(true);
   const [updatingEmail, setUpdatingEmail] = useState(false);
-  const [joinedDate, setJoinedDate] = useState('');
-  const [error, setError] = useState('');
-  const [randomAvatar, setRandomAvatar] = useState('');
+  const [joinedDate, setJoinedDate] = useState("");
+  const [error, setError] = useState("");
+  const [randomAvatar, setRandomAvatar] = useState("");
   // @ts-ignore
   const [userData, setUserData] = useState<any>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchLoading, setSearchLoading] = useState(false);
   const [noResults, setNoResults] = useState(false);
 
-  const userToken = localStorage.getItem('access_token');
+  const userToken = localStorage.getItem("access_token");
   // @ts-ignore
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const fetchMyProfile = async () => {
     try {
-      const res = await fetch('http://localhost:4000/profile/me', {
+      const res = await fetch("http://localhost:4000/profile/me", {
         headers: { Authorization: `Bearer ${userToken}` },
       });
-      if (!res.ok) throw new Error('Failed to fetch profile');
+      if (!res.ok) throw new Error("Failed to fetch profile");
       const data = await res.json();
       setUserData(data);
       if (data.created_at) {
@@ -72,11 +74,11 @@ export default function ProfilePage() {
         setDaysSinceJoined(diffDays);
         setJoinedDate(joined.toLocaleDateString());
       } else {
-        setDaysSinceJoined('N/A');
-        setJoinedDate('N/A');
+        setDaysSinceJoined("N/A");
+        setJoinedDate("N/A");
       }
-      setEmail(data.email || 'N/A');
-      setUsername(data.username || 'N/A');
+      setEmail(data.email || "N/A");
+      setUsername(data.username || "N/A");
     } catch (err) {
       console.error(err);
     }
@@ -84,21 +86,21 @@ export default function ProfilePage() {
 
   const handleUpdateEmail = async () => {
     setUpdatingEmail(true);
-    setError('');
+    setError("");
     try {
-      const res = await fetch('http://localhost:4000/profile/email', {
-        method: 'PUT',
+      const res = await fetch("http://localhost:4000/profile/email", {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${userToken}`,
         },
         body: JSON.stringify({ newEmail }),
       });
-      if (!res.ok) throw new Error('Failed to update email');
+      if (!res.ok) throw new Error("Failed to update email");
       setEmail(newEmail);
       setIsEditingEmail(false);
     } catch (err) {
-      setError('Failed to update email. Please try again.');
+      setError("Failed to update email. Please try again.");
     } finally {
       setUpdatingEmail(false);
     }
@@ -115,10 +117,13 @@ export default function ProfilePage() {
     setNoResults(false);
 
     try {
-      const res = await fetch(`http://localhost:4000/profile/search?username=${query}`, {
-        headers: { Authorization: `Bearer ${userToken}` },
-      });
-      if (!res.ok) throw new Error('Failed to fetch search results');
+      const res = await fetch(
+        `http://localhost:4000/profile/search?username=${query}`,
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        },
+      );
+      if (!res.ok) throw new Error("Failed to fetch search results");
       const data = await res.json();
       setSearchResults(data);
       setNoResults(data.length === 0);
@@ -143,7 +148,9 @@ export default function ProfilePage() {
   };
 
   useEffect(() => {
-    setRandomAvatar(avatarImages[Math.floor(Math.random() * avatarImages.length)]);
+    setRandomAvatar(
+      avatarImages[Math.floor(Math.random() * avatarImages.length)],
+    );
     if (!userToken) {
       setLoading(false);
       return;
@@ -163,13 +170,23 @@ export default function ProfilePage() {
         alignItems="center"
         p={4}
         height="100vh"
-        sx={{ backgroundColor: 'background.default', transition: 'background-color 0.3s ease' }}
+        sx={{
+          backgroundColor: "background.default",
+          transition: "background-color 0.3s ease",
+        }}
       >
         <Typography variant="h5">
-          You are not signed in. Please{' '}
-          <a href="/login" style={{ color: '#00695c',  textDecoration: 'underline', fontWeight: 'bold' }}>
+          You are not signed in. Please{" "}
+          <a
+            href="/login"
+            style={{
+              color: "#00695c",
+              textDecoration: "underline",
+              fontWeight: "bold",
+            }}
+          >
             log in
-          </a>{' '}
+          </a>{" "}
           to view your profile.
         </Typography>
       </Box>
@@ -181,25 +198,25 @@ export default function ProfilePage() {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        backgroundColor: 'background.default',
-        transition: 'background-color 0.3s ease',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "background.default",
+        transition: "background-color 0.3s ease",
         pt: 8,
         pb: 8,
-        minHeight: 'calc(100vh - 64px - 56px)',
+        minHeight: "calc(100vh - 64px - 56px)",
       }}
     >
       {/* Search Bar */}
-      <Box sx={{ mb: 4, width: '100%', maxWidth: 500 }}>
+      <Box sx={{ mb: 4, width: "100%", maxWidth: 500 }}>
         <TextField
           fullWidth
           label="Search for Other Users"
           variant="outlined"
           value={searchQuery}
           onChange={(e) => handleSearchChange(e.target.value)}
-          sx={{ backgroundColor: 'background.paper', borderRadius: 1 }}
+          sx={{ backgroundColor: "background.paper", borderRadius: 1 }}
         />
         {searchLoading && (
           <Box display="flex" justifyContent="center" mt={2}>
@@ -219,7 +236,7 @@ export default function ProfilePage() {
                 sx={{
                   p: 2,
                   mb: 2,
-                  backgroundColor: 'background.paper',
+                  backgroundColor: "background.paper",
                   boxShadow: 3,
                 }}
               >
@@ -238,41 +255,41 @@ export default function ProfilePage() {
       {/* Profile Information */}
       <Paper
         sx={{
-          backgroundColor: 'background.paper',
-          color: 'text.primary',
+          backgroundColor: "background.paper",
+          color: "text.primary",
           p: 4,
           borderRadius: 2,
-          width: '400px',
-          textAlign: 'center',
+          width: "400px",
+          textAlign: "center",
           boxShadow: 5,
-          transition: 'background-color 0.3s ease',
+          transition: "background-color 0.3s ease",
         }}
       >
         <Box
           sx={{
             width: 150,
             height: 150,
-            borderRadius: '50%',
-            overflow: 'hidden',
-            mx: 'auto',
+            borderRadius: "50%",
+            overflow: "hidden",
+            mx: "auto",
             mb: 2,
-            border: '3px solid #00695c',
+            border: "3px solid #00695c",
           }}
         >
           <img
             src={randomAvatar}
             alt="User Avatar"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </Box>
-        <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold' }}>
+        <Typography variant="h5" sx={{ mb: 3, fontWeight: "bold" }}>
           Your Profile
         </Typography>
         <Typography sx={{ mb: 2 }}>
           <strong>Email:</strong> {email}
           {!isEditingEmail && (
             <IconButton onClick={() => setIsEditingEmail(true)}>
-              <EditIcon sx={{ '&:hover': { color: '#00695c' } }} />
+              <EditIcon sx={{ "&:hover": { color: "#00695c" } }} />
             </IconButton>
           )}
         </Typography>
@@ -293,7 +310,7 @@ export default function ProfilePage() {
               fullWidth
               disabled={updatingEmail}
             >
-              {updatingEmail ? 'Updating...' : 'Update Email'}
+              {updatingEmail ? "Updating..." : "Update Email"}
             </Button>
             {error && (
               <Typography color="error" sx={{ mt: 1 }}>
@@ -317,8 +334,8 @@ export default function ProfilePage() {
         <div
           style={{
             height: 20,
-            borderBottom: '1px solid #00695c',
-            margin: '0 20px',
+            borderBottom: "1px solid #00695c",
+            margin: "0 20px",
           }}
         />
         <Typography sx={{ mt: 2 }}>
@@ -328,7 +345,7 @@ export default function ProfilePage() {
           variant="contained"
           color="secondary"
           onClick={() => {
-            localStorage.removeItem('access_token');
+            localStorage.removeItem("access_token");
             window.location.reload();
           }}
           sx={{ mt: 2 }}

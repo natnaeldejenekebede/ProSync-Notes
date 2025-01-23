@@ -93,7 +93,10 @@ const LandingPage = () => {
           animation: `${slideUp} 0.5s ease-out`,
         }}
       >
-        <Typography variant="h3" sx={{ fontWeight: "bold", marginBottom: "1rem", color: "white" }}>
+        <Typography
+          variant="h3"
+          sx={{ fontWeight: "bold", marginBottom: "1rem", color: "white" }}
+        >
           Welcome to CollabNote
         </Typography>
         <Typography variant="h6" sx={{ marginBottom: "2rem", color: "white" }}>
@@ -162,7 +165,9 @@ const LandingPage = () => {
                     {feature.description}
                   </Typography>
                 </CardContent>
-                <CardActions sx={{ justifyContent: "flex-start", padding: "1rem" }}>
+                <CardActions
+                  sx={{ justifyContent: "flex-start", padding: "1rem" }}
+                >
                   <Button
                     component={Link}
                     to={feature.link}
@@ -203,12 +208,15 @@ const LandingPage = () => {
           sx={{
             fontWeight: "bold",
             marginBottom: "1rem",
-            color: "white"
+            color: "white",
           }}
         >
           Ready to Elevate Your Note-Taking Experience?
         </Typography>
-        <Typography variant="body1" sx={{ marginBottom: "1rem", color: "white" }}>
+        <Typography
+          variant="body1"
+          sx={{ marginBottom: "1rem", color: "white" }}
+        >
           Join thousands of users and start collaborating effectively today.
         </Typography>
         <Button

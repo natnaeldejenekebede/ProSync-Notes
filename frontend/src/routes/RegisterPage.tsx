@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Container,
   Paper,
@@ -8,16 +8,16 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import LoadingOverlay from '../components/LoadingOverlay';
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import LoadingOverlay from "../components/LoadingOverlay";
 
 export default function RegisterPage() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPW, setConfirmPW] = useState('');
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPW, setConfirmPW] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPW, setShowConfirmPW] = useState(false);
@@ -26,19 +26,19 @@ export default function RegisterPage() {
 
   const handleRegister = async () => {
     if (password !== confirmPW) {
-      alert('Passwords do not match!');
+      alert("Passwords do not match!");
       return;
     }
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:4000/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("http://localhost:4000/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),
       });
-      if (!response.ok) throw new Error('Registration failed');
-      alert('Registration successful! You can now login.');
-      navigate('/login');
+      if (!response.ok) throw new Error("Registration failed");
+      alert("Registration successful! You can now login.");
+      navigate("/login");
     } catch (err) {
       alert(err);
     } finally {
@@ -54,25 +54,25 @@ export default function RegisterPage() {
           elevation={3}
           sx={{
             p: 4,
-            backgroundColor: 'background.paper',
-            transition: 'background-color 0.3s ease',
-            mb: 8
+            backgroundColor: "background.paper",
+            transition: "background-color 0.3s ease",
+            mb: 8,
           }}
         >
           <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
             Register
           </Typography>
-          <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
+          <Typography variant="body2" sx={{ mb: 3, color: "text.secondary" }}>
             Register for an account to create & access your notes.
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
               label="Username"
               type="text"
               fullWidth
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
+              onKeyPress={(e) => e.key === "Enter" && handleRegister()}
             />
             <TextField
               label="Email"
@@ -80,15 +80,15 @@ export default function RegisterPage() {
               fullWidth
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
+              onKeyPress={(e) => e.key === "Enter" && handleRegister()}
             />
             <TextField
               label="Password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               fullWidth
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
+              onKeyPress={(e) => e.key === "Enter" && handleRegister()}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -104,11 +104,11 @@ export default function RegisterPage() {
             />
             <TextField
               label="Confirm Password"
-              type={showConfirmPW ? 'text' : 'password'}
+              type={showConfirmPW ? "text" : "password"}
               fullWidth
               value={confirmPW}
               onChange={(e) => setConfirmPW(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleRegister()}
+              onKeyPress={(e) => e.key === "Enter" && handleRegister()}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -122,13 +122,24 @@ export default function RegisterPage() {
                 ),
               }}
             />
-            <Button variant="contained" onClick={handleRegister} sx={{ fontWeight: 600 }}>
+            <Button
+              variant="contained"
+              onClick={handleRegister}
+              sx={{ fontWeight: 600 }}
+            >
               Register
             </Button>
           </Box>
           <Typography variant="body2" sx={{ mt: 4 }}>
-            Already have an account?{' '}
-            <a href="/login" style={{ color: '#00695c', textDecoration: 'underline', fontWeight: 'bold' }}>
+            Already have an account?{" "}
+            <a
+              href="/login"
+              style={{
+                color: "#00695c",
+                textDecoration: "underline",
+                fontWeight: "bold",
+              }}
+            >
               Login
             </a>
           </Typography>
