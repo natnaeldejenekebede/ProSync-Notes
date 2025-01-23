@@ -490,6 +490,7 @@ export default function NotesPage() {
             onClick={handleOpenAdd}
             sx={{ fontWeight: 600 }}
           >
+            <Info sx={{ mr: 1 }} />
             Add Note
           </Button>
           {selectedNotes.length > 0 && (
