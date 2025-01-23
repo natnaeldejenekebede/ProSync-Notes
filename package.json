@@ -1,10 +1,14 @@
 {
-  "name": "Collaborative-Note-Tool",
+  "name": "collabnote",
+  "displayName": "CollabNote",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A note-taking app that allows you to take notes together with your friends, family, and colleagues.",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cd frontend && vite && cd ../backend && npm run start:dev",
+    "start": "cd frontend && vite && cd ../backend && npm run start:dev",
+    "frontend": "cd frontend && vite",
+    "backend": "cd backend && npm run start:dev",
+    "install": "cd frontend && npm install && cd ../backend && npm install"
   },
-  "private": true
+  "private": false
 }
