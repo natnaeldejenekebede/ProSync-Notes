@@ -929,9 +929,14 @@ export default function NotesPage() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            Note Details
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <IconButton onClick={handleToggleEdit} title={editMode ? "Cancel Edit" : "Edit"}>
+              <Edit />
+            </IconButton>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              {editMode ? "Edit Note" : "Note Details"}
+            </Typography>
+          </Box>
           <IconButton onClick={closeDetail} title="Close">
             <Close />
           </IconButton>
@@ -939,12 +944,12 @@ export default function NotesPage() {
         <DialogContent
           dividers
           sx={{
-            backgroundColor: editMode ? "#fff" : detailNote?.color || "#ffffff",
+            backgroundColor: editMode ? "#ffffff" : detailNote?.color || "#ffffff",
             transition: "background-color 0.2s",
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            color: getContrastingTextColor(detailNote?.color || "#ffffff"), // Dynamically adjust text color
+            color: editMode ? "#000000" : getContrastingTextColor(detailNote?.color || "#ffffff"), // Black text in edit mode
           }}
         >
           {editMode ? (
@@ -957,7 +962,18 @@ export default function NotesPage() {
                 onChange={(e) => setEditTitle(e.target.value)}
                 sx={{
                   mb: 2,
-                  color: getContrastingTextColor(editColor), // Dynamic text color
+                  backgroundColor: "#ffffff !important", // White background
+                  "& .MuiInputBase-input": {
+                    color: "#000000 !important", // Black text
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000 !important", // Black label
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#000000 !important", // Black border
+                    },
+                  },
                 }}
               />
               <TextField
@@ -969,7 +985,18 @@ export default function NotesPage() {
                 onChange={(e) => setEditContent(e.target.value)}
                 sx={{
                   mb: 2,
-                  color: getContrastingTextColor(editColor), // Dynamic text color
+                  backgroundColor: "#ffffff !important", // White background
+                  "& .MuiInputBase-input": {
+                    color: "#000000 !important", // Black text
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000 !important", // Black label
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#000000 !important", // Black border
+                    },
+                  },
                 }}
               />
               <TextField
@@ -981,7 +1008,18 @@ export default function NotesPage() {
                 onChange={(e) => setEditDueDate(e.target.value)}
                 sx={{
                   mb: 2,
-                  color: getContrastingTextColor(editColor), // Dynamic text color
+                  backgroundColor: "#ffffff !important", // White background
+                  "& .MuiInputBase-input": {
+                    color: "#000000 !important", // Black text
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000 !important", // Black label
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#000000 !important", // Black border
+                    },
+                  },
                 }}
               />
               <TextField
@@ -990,7 +1028,15 @@ export default function NotesPage() {
                 fullWidth
                 value={editColor}
                 onChange={(e) => setEditColor(e.target.value)}
-                sx={{ mb: 2 }}
+                sx={{
+                  mb: 2,
+                  backgroundColor: "#ffffff !important", // White background
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#000000 !important", // Black border
+                    },
+                  },
+                }}
               />
               <TextField
                 label="Tags (comma separated)"
@@ -999,7 +1045,18 @@ export default function NotesPage() {
                 onChange={(e) => setEditTags(e.target.value)}
                 sx={{
                   mb: 2,
-                  color: getContrastingTextColor(editColor), // Dynamic text color
+                  backgroundColor: "#ffffff !important", // White background
+                  "& .MuiInputBase-input": {
+                    color: "#000000 !important", // Black text
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "#000000 !important", // Black label
+                  },
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "#000000 !important", // Black border
+                    },
+                  },
                 }}
               />
             </>
@@ -1053,18 +1110,14 @@ export default function NotesPage() {
                     }}
                   >
                     {detailNote.tags.map((tag, idx) => {
-                      const preTag = PREDEFINED_TAGS.find(
-                        (t) => t.label === tag,
-                      );
+                      const preTag = PREDEFINED_TAGS.find((t) => t.label === tag);
                       return (
                         <Chip
                           key={`${detailNote?.id}-tag-${idx}`}
                           label={tag}
                           sx={{
                             bgcolor: preTag ? preTag.color : "#757575",
-                            color: getContrastingTextColor(
-                              preTag?.color || "#757575",
-                            ),
+                            color: getContrastingTextColor(preTag?.color || "#757575"),
                             fontWeight: 600,
                           }}
                         />

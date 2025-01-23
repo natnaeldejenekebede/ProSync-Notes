@@ -36,6 +36,16 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 - **Responsive Design**: Works on all devices and screen sizes.
 - **Swagger Documentation**: Comprehensive API documentation.
 
+## 🚀 Deployment
+
+The app is deployed on Vercel for the frontend. You can access the live app at [CollabNote](https://collabnote-app.vercel.app/).
+
+Additionally, the backend API is deployed on Render. You can access the API documentation at [CollabNote API](hhttps://collabnote-fullstack-app.onrender.com/).
+
+The backup frontend is also hosted on Netlify, which you can access at [CollabNote Netlify](https://notesapp-nestjs.netlify.app/).
+
+> Note: The backend API may spin down due to inactivity. If you encounter any issues, please try again later. If inactive, the API may take a few seconds to start up, so frontend requests and Swagger may take some time to load initially.
+
 ## 🎯 Tech Stack
 
 | Technology                                    | Description                         |
@@ -75,6 +85,24 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 
 <p align="center">
   <img src="img/notes-dark.png" alt="Notes Dashboard - Dark Mode" />
+</p>
+
+### Add Note Modal
+
+<p align="center">
+  <img src="img/add-note.png" alt="Add Note Modal" />
+</p>
+
+### Note Details Modal
+
+<p align="center">
+  <img src="img/note-details.png" alt="Note Details Page" />
+</p>
+
+### Note Editor
+
+<p align="center">
+  <img src="img/note-editor.png" alt="Note Editor" />
 </p>
 
 ### Profile Page
@@ -125,10 +153,11 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
   <img src="img/reset-password-dark.png" alt="Reset Password Page - Dark Mode" />
 </p>
 
----
-
 ### API Documentation
-*(Add a screenshot of Swagger here)*
+
+<p align="center">
+  <img src="img/api-docs.png" alt="Swagger Documentation" />
+</p>
 
 ## 🛠️ Getting Started
 
