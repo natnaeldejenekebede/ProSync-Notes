@@ -34,39 +34,39 @@ const LandingPage = () => {
       description:
         "Work together in real-time with team members and colleagues.",
       buttonText: "Start Editing",
-      link: "/home",
+      link: "/notes",
     },
     {
       title: "Cloud Sync",
       description: "Access your notes anytime, anywhere, on any device.",
       buttonText: "Learn More",
-      link: "/home",
+      link: "/notes",
     },
     {
       title: "Organized Workspace",
       description:
         "Keep your notes structured with folders, tags, and categories.",
       buttonText: "Explore Features",
-      link: "/home",
+      link: "/notes",
     },
     {
       title: "Secure Sharing",
       description:
         "Share notes securely with access controls and permission settings.",
       buttonText: "Share Notes",
-      link: "/home",
+      link: "/notes",
     },
     {
       title: "Version History",
       description: "Track changes and revert to previous versions seamlessly.",
       buttonText: "View History",
-      link: "/home",
+      link: "/notes",
     },
     {
       title: "Dark Mode Support",
       description: "Work comfortably with an interface tailored to your needs.",
       buttonText: "Try Dark Mode",
-      link: "/home",
+      link: "/notes",
     },
   ];
 
