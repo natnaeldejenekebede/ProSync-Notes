@@ -9,8 +9,8 @@ async function bootstrap() {
 
   // Allow CORS for local dev
   app.enableCors({
-    origin: ['http://localhost:5173'], // default Vite port
-    credentials: true,
+    origin: true, // Allow all origins
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   });
 
   await app.listen(4000, () => {
