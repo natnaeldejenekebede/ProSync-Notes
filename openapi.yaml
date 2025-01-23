@@ -14,6 +14,8 @@ info:
 servers:
   - url: http://localhost:4000
     description: Development server
+  - url: https://collabnote-fullstack-app.onrender.com
+    description: Production server
 paths:
   /auth/register:
     post:

@@ -53,7 +53,7 @@ export default function Navbar() {
         return;
       }
       try {
-        const resp = await fetch("http://localhost:4000/profile/me", {
+        const resp = await fetch("https://collabnote-fullstack-app.onrender.com/profile/me", {
           headers: {
             Authorization: `Bearer ${t}`,
           },
