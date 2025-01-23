@@ -24,6 +24,8 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 - [📖 API Documentation](#-api-documentation)
   - [API Endpoints](#api-endpoints)
 - [🧰 Nginx Configuration](#-nginx-configuration)
+- [🌐 Kubernetes Deployment](#-kubernetes-deployment)
+- [👨🏻‍💻 Continuous Integration and Deployment with Jenkins](#-continuous-integration-and-deployment-with-jenkins)
 - [🧪 Testing](#-testing)
   - [Backend Tests](#backend-tests)
   - [Frontend Tests](#frontend-tests)
@@ -293,6 +295,34 @@ server {
 ```
 
 - For more information, refer to the [Nginx documentation](https://nginx.org/en/docs/) and the [Nginx Directory](nginx/README.md).
+
+## **🌐 Kubernetes Deployment**
+
+1. Create Kubernetes manifests for the services.
+2. Deploy to a cluster:
+   ```bash
+   kubectl apply -f kubernetes/
+   ```
+
+3. Access the application using the service URL.
+
+## **👨🏻‍💻 Continuous Integration and Deployment with Jenkins**
+
+The Budget Management API includes a Jenkins pipeline for continuous integration and deployment.
+
+1. **Pipeline Configuration:** The `Jenkinsfile` defines the CI/CD pipeline stages, including code checkout, dependency installation, testing, building, and deployment. Add it to the root of the project.
+
+2. **Job Setup:** Create a pipeline job in Jenkins, point it to the repository, and configure it to use the `Jenkinsfile`.
+
+3. **Automated Testing:** The pipeline runs `npm test` to ensure all tests pass before proceeding to the build or deployment stages.
+
+4. **Environment Variables:** Use Jenkins environment variables to securely manage secrets like API keys and credentials for services such as MongoDB, Redis, or Render.
+
+5. **Deployment:** The pipeline supports deploying the application using Render or directly to a server using SSH and PM2.
+
+6. **Webhooks:** Integrate GitHub/GitLab webhooks to trigger builds automatically on code changes.
+
+7. **Notifications:** Add Slack or email notifications in the pipeline to inform team members about build and deployment statuses.
 
 ## 🧪 Testing
 
