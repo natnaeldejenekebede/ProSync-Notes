@@ -40,7 +40,7 @@ export default function ResponsiveDrawer({
           sx={{
             justifyContent: "space-between",
             alignItems: "center",
-            backgroundColor: "primary.main",
+            backgroundColor: "#00695c",
             color: "#fff",
           }}
         >
@@ -60,7 +60,7 @@ export default function ResponsiveDrawer({
             sx={{
               fontWeight: isActive("/") ? "bold" : "normal",
               color: isActive("/") ? "white" : "text.primary",
-              backgroundColor: isActive("/") ? "primary.light" : "transparent",
+              backgroundColor: isActive("/") ? "#00695c" : "transparent",
               "&:hover": {
                 backgroundColor: "primary.light",
               },
@@ -77,7 +77,7 @@ export default function ResponsiveDrawer({
               fontWeight: isActive("/notes") ? "bold" : "normal",
               color: isActive("/notes") ? "white" : "text.primary",
               backgroundColor: isActive("/notes")
-                ? "primary.light"
+                ? "#00695c"
                 : "transparent",
               "&:hover": {
                 backgroundColor: "primary.light",
@@ -95,7 +95,7 @@ export default function ResponsiveDrawer({
               fontWeight: isActive("/profile") ? "bold" : "normal",
               color: isActive("/profile") ? "white" : "text.primary",
               backgroundColor: isActive("/profile")
-                ? "primary.light"
+                ? "#00695c"
                 : "transparent",
               "&:hover": {
                 backgroundColor: "primary.light",
@@ -126,7 +126,7 @@ export default function ResponsiveDrawer({
                   fontWeight: isActive("/login") ? "bold" : "normal",
                   color: isActive("/login") ? "white" : "text.primary",
                   backgroundColor: isActive("/login")
-                    ? "primary.light"
+                    ? "#00695c"
                     : "transparent",
                   "&:hover": {
                     backgroundColor: "primary.light",
@@ -141,13 +141,14 @@ export default function ResponsiveDrawer({
                   onClose();
                 }}
                 sx={{
-                  borderBottom: isActive("/register")
-                    ? "3px solid #00695c"
-                    : "none",
                   fontWeight: isActive("/register") ? "bold" : "normal",
-                  color: isActive("/register")
-                    ? "primary.main"
-                    : "text.primary",
+                  color: isActive("/register") ? "white" : "text.primary",
+                  backgroundColor: isActive("/register")
+                    ? "#00695c"
+                    : "transparent",
+                  "&:hover": {
+                    backgroundColor: "primary.light",
+                  },
                 }}
               >
                 <ListItemText primary="Register" />
