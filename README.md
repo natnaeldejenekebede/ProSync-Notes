@@ -53,13 +53,77 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 
 ## 🖼️ UI Overview
 
-### Login Page
-*(Add a screenshot here)*
+### Home Page
 
----
+<p align="center">
+  <img src="img/home.png" alt="Login Page" />
+</p>
+
+### Home Page - Dark Mode
+
+<p align="center">
+  <img src="img/home-dark.png" alt="Login Page - Dark Mode" />
+</p>
 
 ### Notes Dashboard
-*(Add a screenshot here)*
+
+<p align="center">
+  <img src="img/notes.png" alt="Notes Dashboard" />
+</p>
+
+### Notes Dashboard - Dark Mode
+
+<p align="center">
+  <img src="img/notes-dark.png" alt="Notes Dashboard - Dark Mode" />
+</p>
+
+### Profile Page
+
+<p align="center">
+  <img src="img/profile.png" alt="Profile Page" />
+</p>
+
+### Profile Page - Dark Mode
+
+<p align="center">
+  <img src="img/profile-dark.png" alt="Profile Page - Dark Mode" />
+</p>
+
+### Login Page
+
+<p align="center">
+  <img src="img/login.png" alt="Login Page" />
+</p>
+
+### Login Page - Dark Mode
+
+<p align="center">
+  <img src="img/login-dark.png" alt="Login Page - Dark Mode" />
+</p>
+
+### Register Page
+
+<p align="center">
+  <img src="img/register.png" alt="Register Page" />
+</p>
+
+### Register Page - Dark Mode
+
+<p align="center">
+  <img src="img/register-dark.png" alt="Register Page - Dark Mode" />
+</p>
+
+### Reset Password Page
+
+<p align="center">
+  <img src="img/reset-password.png" alt="Reset Password Page" />
+</p>
+
+### Reset Password Page - Dark Mode
+
+<p align="center">
+  <img src="img/reset-password-dark.png" alt="Reset Password Page - Dark Mode" />
+</p>
 
 ---
 
