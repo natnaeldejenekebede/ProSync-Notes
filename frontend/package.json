@@ -1,7 +1,7 @@
 {
   "name": "frontend",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "1.0.0",
   "type": "module",
   "license": "MIT",
   "author": "Son Nguyen",
@@ -12,6 +12,15 @@
   "bugs": {
     "url": "https://github.com/hoangsonww/CollabNote-Fullstack-App/issues"
   },
+  "keywords": [
+    "react",
+    "vite",
+    "mui",
+    "emotion",
+    "react-slick",
+    "collabnote",
+    "frontend"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
