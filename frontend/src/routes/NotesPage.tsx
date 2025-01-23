@@ -34,6 +34,7 @@ import {
   ArrowUpward,
   ArrowDownward,
   Close,
+  FilterList
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
@@ -541,7 +542,7 @@ export default function NotesPage() {
               )}
             </Select>
           </FormControl>
-          <Button variant="outlined" onClick={applyTagFilter}>
+          <Button variant="outlined" onClick={applyTagFilter} startIcon={<FilterList />}>
             Apply Filter
           </Button>
         </Box>
@@ -574,6 +575,7 @@ export default function NotesPage() {
                         bgcolor: "#fff",
                         borderRadius: "4px",
                       }}
+                      title="Select This Note"
                     />
                   </Box>
                   <CardContent
