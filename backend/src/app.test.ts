@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Test, TestingModule } from "@nestjs/testing";
 import { NotesService } from "./notes.service";
 import { SupabaseService } from "../supabase/supabase.service";

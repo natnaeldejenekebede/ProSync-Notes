@@ -110,7 +110,7 @@ export default function NotesPage() {
       const data = await response.json();
       setNotes(data);
     } catch (err) {
-      alert(err);
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -459,7 +459,7 @@ export default function NotesPage() {
         );
 
         if (!response.ok) {
-          alert("Failed to fetch user data");
+          console.log("Failed to fetch user data");
           return;
         }
 
