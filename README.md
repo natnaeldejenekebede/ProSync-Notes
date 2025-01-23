@@ -7,6 +7,10 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v15-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![Swagger](https://img.shields.io/badge/Swagger-v4.1.6-85EA2D?style=for-the-badge&logo=swagger)](https://swagger.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-v20.10.8-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
+[![Nginx](https://img.shields.io/badge/Nginx-v1.21.4-269539?style=for-the-badge&logo=nginx)](https://nginx.org/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.22-326CE5?style=for-the-badge&logo=kubernetes)](https://kubernetes.io/)
+[![Jenkins](https://img.shields.io/badge/Jenkins-v2.319-000000?style=for-the-badge&logo=jenkins)](https://www.jenkins.io/)
 [![ShadCN](https://img.shields.io/badge/ShadCN-UI%20Toolkit-blue?style=for-the-badge)](https://ui.shadcn.dev/)
 
 CollabNote is a collaborative notes platform designed to help you take, share, and manage notes effectively. It features a user-friendly interface, powerful backend APIs, and seamless deployment for both frontend and backend.
