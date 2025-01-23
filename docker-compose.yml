@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app/backend
+    command: ["node", "dist/main.js"]
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      JWT_SECRET: your_jwt_secret
+      DATABASE_URL: your_database_url
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app/frontend
+    ports:
+      - "3000:80"
+    restart: unless-stopped
