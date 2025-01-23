@@ -138,12 +138,12 @@ export class NotesController {
   async shareNote(
     @Request() req: AuthenticatedRequest,
     @Param("id") id: string,
-    @Body() body: { targetUserId: number },
+    @Body() body: { targetUsername: string },
   ) {
     return this.notesService.shareNoteWithUser(
       +id,
       req.user.id,
-      body.targetUserId,
+      body.targetUsername,
     );
   }
 

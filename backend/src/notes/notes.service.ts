@@ -97,11 +97,31 @@ export class NotesService {
     return data;
   }
 
+  async getUserIdFromUsername(username: string) {
+    const { data, error } = await this.supabaseService
+      .getClient()
+      .from("users")
+      .select("id")
+      .eq("username", username)
+      .maybeSingle(); // Change single() to maybeSingle()
+
+    if (error) throw error; // Throw the error if the query fails
+
+    if (!data) {
+      throw new NotFoundException(`User with username "${username}" not found`);
+    }
+
+    return data.id;
+  }
+
   async shareNoteWithUser(
     noteId: number,
     ownerId: number,
-    targetUserId: number,
+    targetUserName: string
   ) {
+    // Get user ID from username
+    const targetUserId = await this.getUserIdFromUsername(targetUserName);
+
     const { data: existing, error: findError } = await this.supabaseService
       .getClient()
       .from("notes")
