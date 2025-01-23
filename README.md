@@ -102,7 +102,7 @@ The backup frontend is also hosted on Netlify, which you can access at [CollabNo
 ### Note Editor
 
 <p align="center">
-  <img src="img/note-editor.png" alt="Note Editor" />
+  <img src="img/edit-note.png" alt="Note Editor" />
 </p>
 
 ### Profile Page
