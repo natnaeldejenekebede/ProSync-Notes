@@ -13,15 +13,22 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 
 ## Table of Contents
 - [🚀 Features](#-features)
+- [🚀 Deployment](#-deployment)
 - [🎯 Tech Stack](#-tech-stack)
-- [🖼️ UI Overview](#️-ui-overview)
-- [🛠️ Getting Started](#️-getting-started)
+- [🖼️ UI Overview](#-ui-overview)
+- [🛠️ Getting Started](#-getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Running Locally](#running-locally)
   - [Using Docker](#using-docker)
 - [📖 API Documentation](#-api-documentation)
   - [API Endpoints](#api-endpoints)
+- [🧪 Testing](#-testing)
+  - [Backend Tests](#backend-tests)
+  - [Frontend Tests](#frontend-tests)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [🎉 Acknowledgments](#-acknowledgments)
 
 ## 🚀 Features
 
