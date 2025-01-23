@@ -1,0 +1,21 @@
+{
+  "short_name": "CollabNote",
+  "name": "CollabNote - Take Notes Together",
+  "description": "A note-taking app that allows you to take notes together with your friends, family, and colleagues.",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#00695c",
+  "background_color": "#ffffff"
+}
