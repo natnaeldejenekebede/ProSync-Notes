@@ -323,6 +323,20 @@ export default function NotesPage() {
     }
   };
 
+  const getContrastingTextColor = (bgColor: string): string => {
+    // Convert hex color to RGB
+    const hex = bgColor.replace("#", "");
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    // Calculate YIQ
+    const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+
+    // Return black for light backgrounds and white for dark backgrounds
+    return yiq >= 128 ? "#000000" : "#FFFFFF";
+  };
+
   const reorderNotes = async (sortedIds: number[]) => {
     setLoading(true);
     try {
@@ -455,146 +469,155 @@ export default function NotesPage() {
           </Button>
         </Box>
         <Grid container spacing={2}>
-          {notes.map((note) => (
-            <Grid key={note.id} item xs={12} sm={6} md={4} lg={3}>
-              <Card
-                sx={{
-                  backgroundColor: note.color || "#ffffff",
-                  position: "relative",
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                  "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: 6,
-                  },
-                }}
-              >
-                <Box sx={{ position: "absolute", top: 8, left: 8, zIndex: 10 }}>
-                  <Checkbox
-                    checked={selectedNotes.includes(note.id)}
-                    onChange={() => handleSelectNote(note.id)}
-                    color="default"
-                    sx={{
-                      color: "#000",
-                      bgcolor: "#fff",
-                      borderRadius: "4px",
-                    }}
-                  />
-                </Box>
-                <CardContent
-                  onClick={() => openDetail(note)}
+          {notes.map((note) => {
+            const textColor = getContrastingTextColor(note.color || "#FFFFFF");
+
+            return (
+              <Grid key={note.id} item xs={12} sm={6} md={4} lg={3}>
+                <Card
                   sx={{
-                    cursor: "pointer",
-                    pt: 5,
-                    mt: 2,
+                    backgroundColor: note.color || "#ffffff",
+                    position: "relative",
+                    transition: "transform 0.2s, box-shadow 0.2s",
+                    "&:hover": {
+                      transform: "translateY(-4px)",
+                      boxShadow: 6,
+                    },
                   }}
                 >
-                  <Typography
-                    variant="h6"
-                    sx={{
-                      fontWeight: 600,
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      whiteSpace: "nowrap",
-                      color: "#000",
-                    }}
-                  >
-                    {note.title}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      mt: 1,
-                      maxHeight: "6em",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical",
-                      color: "#000",
-                    }}
-                  >
-                    {note.content}
-                  </Typography>
-                  {note.due_date && (
-                    <Typography
-                      variant="caption"
+                  <Box sx={{ position: "absolute", top: 8, left: 8, zIndex: 10 }}>
+                    <Checkbox
+                      checked={selectedNotes.includes(note.id)}
+                      onChange={() => handleSelectNote(note.id)}
+                      color="default"
                       sx={{
-                        display: "block",
-                        mt: 1,
-                        fontStyle: "italic",
                         color: "#000",
+                        bgcolor: "#fff",
+                        borderRadius: "4px",
                       }}
-                    >
-                      Due: {note.due_date}
-                    </Typography>
-                  )}
-                  {note.tags && note.tags.length > 0 && (
-                    <Box
-                      sx={{ mt: 1, display: "flex", flexWrap: "wrap", gap: 1 }}
-                    >
-                      {note.tags.map((tag, idx) => {
-                        const preTag = PREDEFINED_TAGS.find(
-                          (t) => t.label === tag,
-                        );
-                        return (
-                          <Chip
-                            key={`${note.id}-tag-${idx}`}
-                            label={tag}
-                            sx={{
-                              bgcolor: preTag ? preTag.color : "#757575",
-                              color: "#fff",
-                              fontWeight: 600,
-                            }}
-                          />
-                        );
-                      })}
-                    </Box>
-                  )}
-                </CardContent>
-                <CardActions sx={{ justifyContent: "space-between" }}>
-                  <Box sx={{ display: "flex", gap: 1 }}>
-                    <IconButton
-                      onClick={() => togglePinNote(note.id, note.pinned)}
-                      sx={{ color: note.pinned ? "#00695c" : "#000" }}
-                    >
-                      <PushPin />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => openShare(note.id)}
+                    />
+                  </Box>
+                  <CardContent
+                    onClick={() => openDetail(note)}
+                    sx={{
+                      cursor: "pointer",
+                      pt: 5,
+                      mt: 2,
+                      color: textColor, // Apply dynamic text color
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
                       sx={{
-                        color:
-                          note.shared_with_user_ids.length > 0
-                            ? "#3f51b5"
-                            : "#000",
+                        fontWeight: 600,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        color: textColor, // Apply dynamic text color
                       }}
                     >
-                      <Share />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => removeNote(note.id)}
-                      sx={{ color: "#f44336" }}
+                      {note.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        mt: 1,
+                        maxHeight: "6em",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                        color: textColor, // Apply dynamic text color
+                      }}
                     >
-                      <Delete />
-                    </IconButton>
-                  </Box>
-                  <Box sx={{ display: "flex", gap: 1 }}>
-                    <IconButton
-                      onClick={() => moveNoteUp(note.id)}
-                      sx={{ color: "#000" }}
-                    >
-                      <ArrowUpward />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => moveNoteDown(note.id)}
-                      sx={{ color: "#000" }}
-                    >
-                      <ArrowDownward />
-                    </IconButton>
-                  </Box>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
+                      {note.content}
+                    </Typography>
+                    {note.due_date && (
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          display: "block",
+                          mt: 1,
+                          fontStyle: "italic",
+                          color: textColor, // Apply dynamic text color
+                        }}
+                      >
+                        Due: {note.due_date}
+                      </Typography>
+                    )}
+                    {note.tags && note.tags.length > 0 && (
+                      <Box
+                        sx={{
+                          mt: 1,
+                          display: "flex",
+                          flexWrap: "wrap",
+                          gap: 1,
+                          color: textColor, // Apply dynamic text color
+                        }}
+                      >
+                        {note.tags.map((tag, idx) => {
+                          const preTag = PREDEFINED_TAGS.find((t) => t.label === tag);
+                          return (
+                            <Chip
+                              key={`${note.id}-tag-${idx}`}
+                              label={tag}
+                              sx={{
+                                bgcolor: preTag ? preTag.color : "#757575",
+                                color: textColor,
+                                fontWeight: 600,
+                              }}
+                            />
+                          );
+                        })}
+                      </Box>
+                    )}
+                  </CardContent>
+                  <CardActions sx={{ justifyContent: "space-between" }}>
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <IconButton
+                        onClick={() => togglePinNote(note.id, note.pinned)}
+                        sx={{ color: note.pinned ? "#00695c" : textColor }}
+                      >
+                        <PushPin />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => openShare(note.id)}
+                        sx={{
+                          color:
+                            note.shared_with_user_ids.length > 0
+                              ? "#3f51b5"
+                              : textColor,
+                        }}
+                      >
+                        <Share />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => removeNote(note.id)}
+                        sx={{ color: "#f44336" }}
+                      >
+                        <Delete />
+                      </IconButton>
+                    </Box>
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <IconButton
+                        onClick={() => moveNoteUp(note.id)}
+                        sx={{ color: textColor }}
+                      >
+                        <ArrowUpward />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => moveNoteDown(note.id)}
+                        sx={{ color: textColor }}
+                      >
+                        <ArrowDownward />
+                      </IconButton>
+                    </Box>
+                  </CardActions>
+                </Card>
+              </Grid>
+            );
+          })}
         </Grid>
       </Container>
 
@@ -604,6 +627,7 @@ export default function NotesPage() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            fontWeight: "bold"
           }}
         >
           Share Note
