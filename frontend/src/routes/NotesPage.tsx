@@ -29,8 +29,8 @@ import {
   Search,
   // @ts-ignore
   Info,
-  // @ts-ignore
   Edit,
+  Add,
   ArrowUpward,
   ArrowDownward,
   Close,
@@ -490,7 +490,7 @@ export default function NotesPage() {
             onClick={handleOpenAdd}
             sx={{ fontWeight: 600 }}
           >
-            <Info sx={{ mr: 1 }} />
+            <Add sx={{ mr: 1 }} />
             Add Note
           </Button>
           {selectedNotes.length > 0 && (
