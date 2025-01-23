@@ -449,11 +449,14 @@ export default function NotesPage() {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-        const response = await fetch("https://collabnote-fullstack-app.onrender.com/profile/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const response = await fetch(
+          "https://collabnote-fullstack-app.onrender.com/profile/me",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         if (!response.ok) {
           alert("Failed to fetch user data");
@@ -478,7 +481,8 @@ export default function NotesPage() {
       <LoadingOverlay loading={loading} />
       <Container maxWidth="lg" sx={{ pt: 4, pb: 4 }}>
         <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
-          Good {new Date().getHours() < 12 ? "Morning" : "Afternoon"}, {username}!
+          Good {new Date().getHours() < 12 ? "Morning" : "Afternoon"},{" "}
+          {username}!
         </Typography>
         <Box sx={{ mb: 2, display: "flex", gap: 2 }}>
           <Button
