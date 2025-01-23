@@ -16,9 +16,18 @@ servers:
     description: Development server
   - url: https://collabnote-fullstack-app.onrender.com
     description: Production server
+tags:
+  - name: Auth
+    description: Authentication-related endpoints
+  - name: Notes
+    description: Endpoints related to creating, managing, and sharing notes
+  - name: Profile
+    description: Endpoints for user profiles
 paths:
   /auth/register:
     post:
+      tags:
+        - Auth
       summary: Register a new user
       requestBody:
         description: User registration data
@@ -44,6 +53,8 @@ paths:
           description: Bad request
   /auth/login:
     post:
+      tags:
+        - Auth
       summary: Login an existing user
       requestBody:
         description: User login data
@@ -66,6 +77,8 @@ paths:
           description: Invalid credentials
   /auth/check-email-exists:
     post:
+      tags:
+        - Auth
       summary: Check if an email exists
       requestBody:
         description: Email to check
@@ -85,6 +98,8 @@ paths:
           description: Bad request
   /auth/reset-password:
     post:
+      tags:
+        - Auth
       summary: Reset a user's password
       requestBody:
         description: Password reset data
@@ -110,6 +125,8 @@ paths:
           description: Bad request
   /notes:
     get:
+      tags:
+        - Notes
       summary: Retrieve user notes
       parameters:
         - name: search
@@ -128,6 +145,8 @@ paths:
         '401':
           description: Unauthorized access
     post:
+      tags:
+        - Notes
       summary: Create a new note
       requestBody:
         description: Details of the new note
@@ -162,6 +181,8 @@ paths:
           description: Invalid input
   /notes/{id}:
     patch:
+      tags:
+        - Notes
       summary: Update a note
       parameters:
         - name: id
@@ -183,6 +204,8 @@ paths:
         '404':
           description: Note not found
     delete:
+      tags:
+        - Notes
       summary: Delete a note
       parameters:
         - name: id
@@ -198,6 +221,8 @@ paths:
           description: Note not found
   /notes/{id}/share:
     post:
+      tags:
+        - Notes
       summary: Share a note with another user
       parameters:
         - name: id
@@ -224,6 +249,8 @@ paths:
           description: Note or user not found
   /notes/reorder:
     post:
+      tags:
+        - Notes
       summary: Reorder user notes
       requestBody:
         description: New order of note IDs
@@ -245,6 +272,8 @@ paths:
           description: Invalid input
   /profile/me:
     get:
+      tags:
+        - Profile
       summary: Retrieve the authenticated user's profile
       responses:
         '200':
@@ -253,6 +282,8 @@ paths:
           description: Unauthorized access
   /profile/userId/{id}:
     get:
+      tags:
+        - Profile
       summary: Retrieve a user profile by ID
       parameters:
         - name: id
@@ -268,6 +299,8 @@ paths:
           description: User not found
   /profile/search:
     get:
+      tags:
+        - Profile
       summary: Search for a user profile by username
       parameters:
         - name: username
