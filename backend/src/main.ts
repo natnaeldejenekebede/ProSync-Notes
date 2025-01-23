@@ -41,7 +41,11 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup("api", app, document);
+
+  // Set the custom site title for the Swagger UI
+  SwaggerModule.setup("api", app, document, {
+    customSiteTitle: "CollabNote API Documentation",
+  });
 
   const port = configService.get<number>("PORT", 4000); // Use PORT from config or default to 4000
 
