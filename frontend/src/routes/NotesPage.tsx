@@ -689,12 +689,14 @@ export default function NotesPage() {
                       <IconButton
                         onClick={() => moveNoteUp(note.id)}
                         sx={{ color: textColor }}
+                        title="Move Note Left/Up"
                       >
                         <ArrowUpward />
                       </IconButton>
                       <IconButton
                         onClick={() => moveNoteDown(note.id)}
                         sx={{ color: textColor }}
+                        title="Move Note Right/Down"
                       >
                         <ArrowDownward />
                       </IconButton>
