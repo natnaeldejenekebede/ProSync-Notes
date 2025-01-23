@@ -23,6 +23,7 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
   - [Using Docker](#using-docker)
 - [📖 API Documentation](#-api-documentation)
   - [API Endpoints](#api-endpoints)
+- [🧰 Nginx Configuration](#-nginx-configuration)
 - [🧪 Testing](#-testing)
   - [Backend Tests](#backend-tests)
   - [Frontend Tests](#frontend-tests)
@@ -268,6 +269,30 @@ All APIs are documented in Swagger. Access the documentation at [http://localhos
 | GET    | `/profile/userId/{id}`     | Retrieve a user profile by ID             |
 | GET    | `/profile/search`          | Search for a user profile by username     |
 
+## **🧰 Nginx Configuration**
+
+- The `nginx` directory contains an Nginx configuration for reverse proxy and load balancing.
+- Use Nginx to route requests to multiple instances of the API.
+- Configure SSL termination and caching for improved performance.
+- The Nginx configuration looks like this:
+
+```nginx
+server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+- For more information, refer to the [Nginx documentation](https://nginx.org/en/docs/) and the [Nginx Directory](nginx/README.md).
 
 ## 🧪 Testing
 
