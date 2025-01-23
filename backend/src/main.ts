@@ -22,13 +22,24 @@ async function bootstrap() {
     next();
   });
 
-  // Swagger Setup
+  // Swagger Setup with Enhanced Metadata
   const swaggerConfig = new DocumentBuilder()
     .setTitle("CollabNote API")
-    .setDescription("API documentation for the CollabNote app")
+    .setDescription(
+      "Comprehensive API documentation for the CollabNote application, an intuitive collaborative notes platform.",
+    )
     .setVersion("1.0.0")
     .addBearerAuth() // Add support for JWT tokens
+    .setContact(
+      "Son Nguyen",
+      "https://github.com/hoangsonww",
+      "hoangson091104@gmail.com",
+    ) // Author Contact Info
+    .setLicense("MIT", "https://opensource.org/licenses/MIT") // License Info
+    .addServer("http://localhost:4000", "Development server") // Development Server
+    .addServer("https://api.collabnote.com", "Production server") // Production Server
     .build();
+
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup("api", app, document);
 
@@ -38,7 +49,9 @@ async function bootstrap() {
     logger.log(
       `NestJS Backend running on port ${port} and ready for cloud deployment`,
     );
-    logger.log(`Swagger API documentation available at ${port}/api`);
+    logger.log(
+      `Swagger API documentation available at http://localhost:${port}/api`,
+    );
   });
 }
 
