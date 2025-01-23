@@ -358,15 +358,29 @@ export default function ProfilePage() {
               onChange={(e) => setNewEmail(e.target.value)}
               sx={{ mb: 2 }}
             />
-            <Button
-              onClick={handleUpdateEmail}
-              variant="contained"
-              color="primary"
-              fullWidth
-              disabled={updatingEmail}
-            >
-              {updatingEmail ? "Updating..." : "Update Email"}
-            </Button>
+            <Box sx={{ display: "flex", gap: 2 }}>
+              <Button
+                onClick={handleUpdateEmail}
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={updatingEmail}
+              >
+                {updatingEmail ? "Updating..." : "Update Email"}
+              </Button>
+              <Button
+                onClick={() => {
+                  setIsEditingEmail(false);
+                  setNewEmail(""); // Clear the input field
+                  setError(""); // Clear any previous error
+                }}
+                variant="outlined"
+                color="secondary"
+                fullWidth
+              >
+                Cancel
+              </Button>
+            </Box>
             {error && (
               <Typography color="error" sx={{ mt: 1 }}>
                 {error}
