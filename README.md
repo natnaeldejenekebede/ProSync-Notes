@@ -20,6 +20,7 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 - [🚀 Deployment](#-deployment)
 - [🎯 Tech Stack](#-tech-stack)
 - [🖼️ UI Overview](#-ui-overview)
+- [📂 Project Structure](#-project-structure)
 - [🛠️ Getting Started](#-getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -27,6 +28,7 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
   - [Using Docker](#using-docker)
 - [📖 API Documentation](#-api-documentation)
   - [API Endpoints](#api-endpoints)
+  - [Detailed Guide for Using the `openapi.yaml` File](#detailed-guide-for-using-the-openapiyaml-file)
 - [🧰 Nginx Configuration](#-nginx-configuration)
 - [🌐 Kubernetes Deployment](#-kubernetes-deployment)
 - [👨🏻‍💻 Continuous Integration and Deployment with Jenkins](#-continuous-integration-and-deployment-with-jenkins)
@@ -42,6 +44,8 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 - **Authentication**: Secure user login, registration, and password management.
 - **Notes Management**: Create, update, delete, and reorder notes.
 - **Sharing**: Share notes with other users seamlessly.
+- **Syncing**: Real-time syncing of notes across devices, and across users, thanks to Supabase.
+- **Collaboration**: Collaborate with others on notes in real-time.
 - **Search**: Search for notes by title or content.
 - **User Profiles**: Manage and search user profiles.
 - **Profile Settings**: Update user profile information.
@@ -73,7 +77,13 @@ The backup frontend is also hosted on Netlify, which you can access at [CollabNo
 | [TypeScript](https://www.typescriptlang.org/) | Type-safe development               |
 | [Swagger](https://swagger.io/)                | API documentation and testing tool  |
 | [ShadCN](https://ui.shadcn.dev/)              | UI components for a modern design   |
-
+| [Docker](https://www.docker.com/)             | Containerization for apps           |
+| [Nginx](https://nginx.org/)                   | Web server for load balancing       |
+| [Kubernetes](https://kubernetes.io/)          | Container orchestration platform    |
+| [Jenkins](https://www.jenkins.io/)            | CI/CD tool for automation           |
+| [Render](https://render.com/)                 | Cloud platform for hosting apps     |
+| [Vercel](https://vercel.com/)                 | Cloud platform for frontend hosting |
+| [Netlify](https://www.netlify.com/)           | Cloud platform for hosting apps     |
 
 ## 🖼️ UI Overview
 
@@ -173,6 +183,117 @@ The backup frontend is also hosted on Netlify, which you can access at [CollabNo
   <img src="img/api-docs.png" alt="Swagger Documentation" />
 </p>
 
+## 📂 Project Structure
+
+```
+DocuThinker-AI-App/
+├── backend/
+│   ├── src/
+│   │   ├── auth/
+│   │   │   ├── auth.module.ts        # Authentication module
+│   │   │   ├── auth.controller.ts    # Authentication controller
+│   │   │   ├── auth.service.ts       # Authentication service
+│   │   │   └── jwt.strategy.ts       # JWT authentication strategy
+│   │   ├── notes/
+│   │   │   ├── notes.module.ts       # Notes module
+│   │   │   ├── notes.controller.ts   # Notes controller
+│   │   │   └── notes.service.ts      # Notes service
+│   │   ├── profile/
+│   │   │   ├── profile.module.ts     # Profile module
+│   │   │   ├── profile.controller.ts # Profile controller
+│   │   │   └── profile.service.ts    # Profile service
+│   │   ├── supabase/
+│   │   │   ├── supabase.module.ts    # Supabase module
+│   │   │   └── supabase.service.ts   # Supabase service
+│   │   ├── types/
+│   │   │   └── authenticated-request.ts  # Authenticated user type
+│   │   ├── app.module.ts             # Main app module
+│   │   ├── app.test.ts               # App test file
+│   │   └── main.ts                   # Main entry point for the backend
+│   ├── .env                          # Environment variables (git-ignored)
+│   ├── build-backend.sh              # Shell script to build the backend
+│   ├── Dockerfile                    # Docker configuration file
+│   ├── docker-compose.yml            # Docker Compose file for the backend
+│   ├── package.json                  # Project dependencies and scripts
+│   ├── package-lock.json             # Lock file for dependencies
+│   ├── tsconfig.json                 # TypeScript configuration file
+│   └── vercel.json                   # Vercel configuration file
+│
+├── frontend/
+│   ├── public/
+│   │   ├── favicon.ico               # Favicon for the app
+│   │   ├── (other images...)         # Other images used in the app
+│   │   ├── index.html                # Main HTML template
+│   │   └── manifest.json             # Manifest for PWA settings
+│   ├── src/
+│   │   ├── assets/                   # Static assets like images and fonts
+│   │   │   └── logo.png              # App logo or images
+│   │   ├── components/
+│   │   │   ├── LoadingOverlay.tsx    # Loading overlay component
+│   │   │   └── PasswordField.tsx     # Password field component
+│   │   ├── layout/
+│   │   │   ├── ResponsiveDrawer.tsx  # Responsive drawer component
+│   │   │   ├── Footer.tsx            # Footer component
+│   │   │   ├── Layout.tsx            # Main layout component
+│   │   │   └── Navbar.tsx            # Navbar component
+│   │   ├── routes/
+│   │   │   ├── ForgotPasswordPage.tsx   # Forgot password page
+│   │   │   ├── HomePage.tsx          # Home page
+│   │   │   ├── LoginPage.tsx         # Login page
+│   │   │   ├── NoteDetailsPage.tsx   # Note details page
+│   │   │   ├── NotesPage.tsx         # Notes dashboard page
+│   │   │   ├── ProfilePage.tsx       # Profile page
+│   │   │   └── RegisterPage.tsx      # Register page
+│   │   ├── theme/
+│   │   │   ├── index.ts              # Theme configuration
+│   │   │   ├── ThemeContext.tsx      # Theme context provider
+│   │   │   └── ThemeProviderWrapper.tsx  # Theme provider wrapper
+│   │   ├── App.tsx                   # Main App component
+│   │   ├── App.test.tsx              # App test file
+│   │   ├── App.css                   # Global CSS 1
+│   │   ├── index.css                 # Global CSS 2
+│   │   ├── main.tsx                  # Main entry point for the frontend
+│   │   └── vite-env.d.ts             # Vite environment types
+│   ├── .gitignore                    # Git ignore file
+│   ├── package.json                  # Project dependencies and scripts
+│   ├── package-lock.json             # Lock file for dependencies
+│   ├── Dockerfile                    # Docker configuration file
+│   ├── docker-compose.yml            # Docker Compose file for the frontend
+│   ├── index.html                    # Main HTML template
+│   ├── build-frontend.sh             # Shell script to build the frontend
+│   ├── vercel.json                   # Vercel configuration file
+│   ├── vite.config.ts                # Vite configuration file
+│   ├── tsconfig.app.json             # TypeScript configuration file for the app
+│   ├── tsconfig.node.json            # TypeScript configuration file for Node
+│   └── tsconfig.json                 # TypeScript configuration file
+│
+├── kubernetes/                       # Kubernetes configuration files
+│   ├── backend-deployment.yaml       # Deployment configuration for the backend
+│   ├── backend-service.yaml          # Service configuration for the backend
+│   ├── frontend-deployment.yaml      # Deployment configuration for the frontend
+│   ├── frontend-service.yaml         # Service configuration for the frontend
+│   └── configmap.yaml                # ConfigMap configuration for environment variables
+│
+├── nginx/
+│   ├── start_nginx.sh                # Shell script to start NGINX
+│   ├── nginx.conf                    # NGINX configuration file for load balancing and caching
+│   ├── docker-compose.yml            # Docker Compose file for NGINX
+│   └── Dockerfile                    # Docker configuration file for NGINX
+│
+├── images/                           # Images for the README
+├── .env                              # Environment variables file for the whole app
+├── docker-compose.yml                # Docker Compose file for containerization
+├── package.json                      # Project dependencies and scripts
+├── package-lock.json                 # Lock file for dependencies
+├── vercel.json                       # Vercel configuration file
+├── openapi.yaml                      # OpenAPI specification for API documentation
+├── jenkins_cicd.sh                   # Shell script for managing the Jenkins CI/CD pipeline
+├── .gitignore                        # Git ignore file
+├── LICENSE                           # License file for the project
+├── README.md                         # Comprehensive README for the whole app
+└── (and many more files...)          # Additional files and directories not listed here
+```
+
 ## 🛠️ Getting Started
 
 Follow these steps to set up the project on your local machine.
@@ -219,8 +340,6 @@ Ensure you have the following installed:
   ```env
   VITE_API_URL=http://localhost:4000
   ```
-
----
 
 ### Running Locally
 
@@ -274,6 +393,61 @@ All APIs are documented in Swagger. Access the documentation at [http://localhos
 | GET    | `/profile/me`              | Retrieve the authenticated user's profile |
 | GET    | `/profile/userId/{id}`     | Retrieve a user profile by ID             |
 | GET    | `/profile/search`          | Search for a user profile by username     |
+| PATCH  | `/profile/me`              | Update the authenticated user's profile   |
+
+### Detailed Guide for Using the `openapi.yaml` File
+
+1. **View the API Documentation**
+
+- Open [Swagger Editor](https://editor.swagger.io/).
+- Upload the `openapi.yaml` file or paste its content.
+- Visualize and interact with the API documentation.
+
+2. **Test the API**
+
+- Import `openapi.yaml` into [Postman](https://www.postman.com/):
+  - Open Postman → Import → Select `openapi.yaml`.
+  - Test the API endpoints directly from Postman.
+- Or use [Swagger UI](https://swagger.io/tools/swagger-ui/):
+  - Provide the file URL or upload it to view and test endpoints.
+
+3. **Generate Client Libraries**
+
+- Install OpenAPI Generator:
+  ```bash
+  npm install @openapitools/openapi-generator-cli -g
+  ```
+- Generate a client library:
+  ```bash
+  openapi-generator-cli generate -i openapi.yaml -g <language> -o ./client
+  ```
+- Replace `<language>` with the desired programming language.
+
+4. **Generate Server Stubs**
+
+- Generate a server stub:
+  ```bash
+  openapi-generator-cli generate -i openapi.yaml -g <framework> -o ./server
+  ```
+- Replace `<framework>` with the desired framework.
+
+5. **Run a Mock Server**
+
+- Install Prism:
+  ```bash
+  npm install -g @stoplight/prism-cli
+  ```
+- Start the mock server:
+  ```bash
+  prism mock openapi.yaml
+  ```
+
+6. **Validate the OpenAPI File**
+
+- Use [Swagger Validator](https://validator.swagger.io/):
+  - Upload `openapi.yaml` or paste its content to check for errors.
+
+This guide enables you to view, test, and utilize the API.
 
 ## **🧰 Nginx Configuration**
 
@@ -330,7 +504,7 @@ The Budget Management API includes a Jenkins pipeline for continuous integration
 
 ## 🧪 Testing
 
-Run tests to ensure the app functions as expected.
+We also feature Jest unit and integration tests for both the backend and frontend. Run the tests to ensure the app functions as expected.
 
 ### Backend Tests
 ```bash
@@ -359,6 +533,6 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 ---
 
-Thank you for visiting CollabNote today! Happy notetaking! 📝🚀
+Thank you for visiting CollabNote today! **Happy notetaking!** 📝🚀
 
 [🔝 Back to Top](#collabnote---a-nestjs-nextjs-vite-and-supabase-fullstack-notetaking-app)

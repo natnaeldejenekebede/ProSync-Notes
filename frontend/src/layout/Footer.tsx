@@ -224,12 +224,23 @@ export default function Footer() {
         </Link>
       </Box>
 
+      {/* Footer Divider */}
+      <hr
+        style={{
+          width: "80%",
+          margin: "auto",
+          border: 0,
+          borderTop: "1px solid #fff",
+        }}
+      />
+
       {/* Footer Text */}
       <Typography
         variant="body2"
         sx={{
           animation: "fadeIn 0.5s ease-in-out 0.4s",
           animationFillMode: "forwards",
+          mt: 2,
         }}
       >
         © {new Date().getFullYear()} CollabNote. All rights reserved.

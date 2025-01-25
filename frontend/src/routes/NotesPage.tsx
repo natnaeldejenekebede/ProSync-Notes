@@ -117,6 +117,64 @@ export default function NotesPage() {
     }
   };
 
+  useEffect(() => {
+    let pollingInterval: NodeJS.Timeout;
+
+    const fetchNotesPeriodically = async () => {
+      try {
+        const response = await fetch(
+          "https://collabnote-fullstack-app.onrender.com/notes",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            navigate("/login");
+          }
+          return;
+        }
+
+        const newNotes: Note[] = await response.json();
+
+        // Only update the state if notes have changed
+        const notesChanged =
+          notes.length !== newNotes.length ||
+          notes.some((note, index) => {
+            const newNote = newNotes[index];
+            return (
+              note.id !== newNote.id ||
+              note.title !== newNote.title ||
+              note.content !== newNote.content ||
+              note.pinned !== newNote.pinned ||
+              note.color !== newNote.color ||
+              note.due_date !== newNote.due_date ||
+              note.shared_with_user_ids !== newNote.shared_with_user_ids ||
+              note.sort_order !== newNote.sort_order ||
+              note.tags?.join(",") !== newNote.tags?.join(",")
+            );
+          });
+
+        if (notesChanged) {
+          setNotes(newNotes);
+        }
+      } catch (err) {
+        console.error("Error fetching notes periodically:", err);
+      }
+    };
+
+    if (isLoggedIn) {
+      pollingInterval = setInterval(fetchNotesPeriodically, 2000); // Poll every 2 seconds
+    }
+
+    return () => {
+      if (pollingInterval) {
+        clearInterval(pollingInterval);
+      }
+    };
+  }, [isLoggedIn, notes]);
+
   const applyTagFilter = () => {
     fetchNotes(searchQuery, tagFilter);
   };
@@ -221,7 +279,8 @@ export default function NotesPage() {
             body: JSON.stringify({ targetUsername: shareTargetUserId }),
           },
         );
-        if (!response.ok) throw new Error("Failed to share note");
+        if (!response.ok)
+          throw new Error("Failed to share note - Username not Found");
         await response.json();
       }
       setShareTargetUserId("");
@@ -445,16 +504,46 @@ export default function NotesPage() {
   }, [searchQuery]);
 
   const [username, setUsername] = useState("");
+  const [quote, setQuote] = useState("");
+
+  const quotes = [
+    "“The best way to predict the future is to create it.” – Abraham Lincoln",
+    "“Your time is limited, so don’t waste it living someone else’s life.” – Steve Jobs",
+    "“Success usually comes to those who are too busy to be looking for it.” – Henry David Thoreau",
+    "“Don’t be afraid to give up the good to go for the great.” – John D. Rockefeller",
+    "“I find that the harder I work, the more luck I seem to have.” – Thomas Jefferson",
+    "“Success is walking from failure to failure with no loss of enthusiasm.” – Winston Churchill",
+    "“The only limit to our realization of tomorrow will be our doubts of today.” – Franklin D. Roosevelt",
+    "“It’s not whether you get knocked down, it’s whether you get up.” – Vince Lombardi",
+    "“The way to get started is to quit talking and begin doing.” – Walt Disney",
+    "“The pessimist sees difficulty in every opportunity. The optimist sees opportunity in every difficulty.” – Winston Churchill",
+    "“Don’t let yesterday take up too much of today.” – Will Rogers",
+    "“You learn more from failure than from success. Don’t let it stop you. Failure builds character.” – Unknown",
+    "“It’s not whether you get knocked down, it’s whether you get up.” – Vince Lombardi",
+    "“People who are crazy enough to think they can change the world, are the ones who do.” – Rob Siltanen",
+    "“Knowing is not enough; we must apply. Wishing is not enough; we must do.” – Johann Wolfgang Von Goethe",
+    "“Whether you think you can or think you can’t, you’re right.” – Henry Ford",
+    "“The only way to do great work is to love what you do.” – Steve Jobs",
+    "“The best time to plant a tree was 20 years ago. The second best time is now.” – Chinese Proverb",
+    "“The best revenge is massive success.” – Frank Sinatra",
+    "“The secret of getting ahead is getting started.” – Mark Twain",
+    "“The best way to get started is to quit talking and begin doing.” – Walt Disney",
+    "“The only limit to our realization of tomorrow will be our doubts of today.” – Franklin D. Roosevelt",
+  ];
+
+  useEffect(() => {
+    // Select a random quote
+    setQuote(quotes[Math.floor(Math.random() * quotes.length)]);
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
-      setLoading(true);
       try {
         const response = await fetch(
           "https://collabnote-fullstack-app.onrender.com/profile/me",
           {
             headers: {
-              Authorization: `Bearer ${token}`,
+              Authorization: `Bearer ${localStorage.getItem("access_token")}`,
             },
           },
         );
@@ -468,14 +557,11 @@ export default function NotesPage() {
         setUsername(data.username);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        alert("An error occurred while fetching user data");
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchUserData();
-  }, [token]);
+  }, []);
 
   return (
     <>
@@ -484,6 +570,12 @@ export default function NotesPage() {
         <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
           Good {new Date().getHours() < 12 ? "Morning" : "Afternoon"},{" "}
           {username}!
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontStyle: "italic", color: "gray", mt: 1, mb: 3 }}
+        >
+          {quote}
         </Typography>
         <Box sx={{ mb: 2, display: "flex", gap: 2 }}>
           <Button

@@ -57,9 +57,10 @@ const LandingPage = () => {
       link: "/notes",
     },
     {
-      title: "Version History",
-      description: "Track changes and revert to previous versions seamlessly.",
-      buttonText: "View History",
+      title: "Powerful Search",
+      description:
+        "Find notes quickly with advanced search and filter options.",
+      buttonText: "Search Notes",
       link: "/notes",
     },
     {
@@ -198,7 +199,6 @@ const LandingPage = () => {
           padding: "2rem",
           backgroundColor: "#00695c",
           color: theme.palette.text.primary,
-          borderRadius: 2,
           boxShadow: 3,
           animation: `${slideUp} 0.8s ease-out`,
         }}
