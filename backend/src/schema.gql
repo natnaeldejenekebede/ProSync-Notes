@@ -1,0 +1,61 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthResponse {
+  message: String!
+  accessToken: String
+}
+
+type Note {
+  id: Int!
+  userId: Int!
+  title: String!
+  content: String!
+  tags: [String!]
+  dueDate: String
+  color: String
+  pinned: Boolean
+  sharedWithUserIds: [Int!]
+  sortOrder: Int
+  username: String
+}
+
+type UserProfile {
+  id: Int!
+  username: String!
+  email: String!
+  createdAt: String!
+}
+
+type Query {
+  getUserNotes(userId: Int!, searchQuery: String, tagFilter: String): [Note!]!
+  getUserProfileById(userId: Int!): UserProfile!
+  searchProfiles(username: String!): [UserProfile!]!
+}
+
+type Mutation {
+  register(username: String!, email: String!, password: String!): AuthResponse!
+  login(email: String!, password: String!): AuthResponse!
+  createNote(createNoteInput: CreateNoteInput!): Note!
+  updateNote(noteId: Int!, userId: Int!, updates: UpdateNoteInput!): Note!
+}
+
+input CreateNoteInput {
+  userId: Int!
+  title: String!
+  content: String!
+  tags: [String!]
+  dueDate: String
+  color: String
+}
+
+input UpdateNoteInput {
+  userId: Int
+  title: String
+  content: String
+  tags: [String!]
+  dueDate: String
+  color: String
+  id: Int!
+}

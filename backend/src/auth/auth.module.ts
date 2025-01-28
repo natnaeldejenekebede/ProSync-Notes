@@ -5,6 +5,7 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { SupabaseModule } from "../supabase/supabase.module";
 import { JwtStrategy } from "./jwt.strategy";
+import { AuthResolver } from "./auth.resolver";
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { JwtStrategy } from "./jwt.strategy";
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, AuthResolver],
   controllers: [AuthController],
 })
 /**
