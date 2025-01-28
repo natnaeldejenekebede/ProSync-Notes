@@ -18,7 +18,7 @@ import {
   ApiBearerAuth,
 } from "@nestjs/swagger";
 
-@ApiTags("Profile") // Group all profile-related endpoints under "Profile"
+@ApiTags("Profile")
 @ApiBearerAuth()
 @Controller("profile")
 /**
