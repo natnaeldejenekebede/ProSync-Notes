@@ -4,6 +4,9 @@ import { NotesService } from "./notes.service";
 import { SupabaseService } from "../supabase/supabase.service";
 import { BadRequestException, NotFoundException } from "@nestjs/common";
 
+/**
+ * Tests for the NotesService
+ */
 describe("NotesService", () => {
   let service: NotesService;
   let supabaseService: Partial<Record<keyof SupabaseService, jest.Mock>>;

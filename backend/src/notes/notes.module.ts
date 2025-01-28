@@ -8,4 +8,7 @@ import { SupabaseModule } from "../supabase/supabase.module";
   providers: [NotesService],
   controllers: [NotesController],
 })
+/**
+ * Module for handling note-related functionality
+ */
 export class NotesModule {}

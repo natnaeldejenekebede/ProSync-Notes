@@ -6,6 +6,9 @@ import { Request, Response, NextFunction } from "express";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { NestExpressApplication } from "@nestjs/platform-express";
 
+/**
+ * Bootstrap the NestJS application
+ */
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);

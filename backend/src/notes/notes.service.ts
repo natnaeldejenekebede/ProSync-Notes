@@ -6,9 +6,24 @@ import {
 import { SupabaseService } from "../supabase/supabase.service";
 
 @Injectable()
+/**
+ * Service for handling note-related functionality
+ */
 export class NotesService {
+  /**
+   * Constructor for the NotesService
+   *
+   * @param supabaseService The SupabaseService instance
+   */
   constructor(private readonly supabaseService: SupabaseService) {}
 
+  /**
+   * Retrieve notes for a user
+   *
+   * @param userId The ID of the user
+   * @param searchQuery The search query to filter notes
+   * @param tagFilter The tag to filter notes
+   */
   async getUserNotes(userId: number, searchQuery?: string, tagFilter?: string) {
     let query = this.supabaseService
       .getClient()
@@ -30,10 +45,16 @@ export class NotesService {
     }
 
     const { data, error } = await query;
+
     if (error) throw error;
     return data;
   }
 
+  /**
+   * Create a new note
+   *
+   * @param noteData The data for the new note
+   */
   async createNote(noteData: {
     userId: number;
     title: string;
@@ -64,16 +85,26 @@ export class NotesService {
     if (error) {
       throw new BadRequestException(error.message);
     }
+
     return data;
   }
 
+  /**
+   * Update an existing note
+   *
+   * @param noteId The ID of the note
+   * @param userId The ID of the user
+   * @param updates The updates to apply to the note
+   */
   async updateNote(noteId: number, userId: number, updates: any) {
     const { data: existing, error: findError } = await this.supabaseService
       .getClient()
       .from("notes")
       .select()
       .eq("id", noteId);
+
     if (findError) throw findError;
+
     if (!existing || existing.length === 0) {
       throw new NotFoundException("Note not found");
     }
@@ -81,6 +112,7 @@ export class NotesService {
     const note = existing[0];
     const isOwner = note.user_id === userId;
     const isSharedWithUser = note.shared_with_user_ids?.includes(userId);
+
     if (!isOwner && !isSharedWithUser) {
       throw new BadRequestException("You cannot update this note");
     }
@@ -91,12 +123,19 @@ export class NotesService {
       .update(updates)
       .eq("id", noteId)
       .select();
+
     if (error) {
       throw new BadRequestException(error.message);
     }
+
     return data;
   }
 
+  /**
+   * Get the user ID from a username
+   *
+   * @param username The username to search for
+   */
   async getUserIdFromUsername(username: string) {
     const { data, error } = await this.supabaseService
       .getClient()
@@ -114,6 +153,13 @@ export class NotesService {
     return data.id;
   }
 
+  /**
+   * Share a note with another user
+   *
+   * @param noteId The ID of the note
+   * @param ownerId The ID of the owner
+   * @param targetUserName The username of the user to share the note with
+   */
   async shareNoteWithUser(
     noteId: number,
     ownerId: number,
@@ -128,15 +174,19 @@ export class NotesService {
       .select()
       .eq("id", noteId)
       .single();
+
     if (findError) throw findError;
+
     if (!existing) {
       throw new NotFoundException("Note not found");
     }
+
     if (existing.user_id !== ownerId) {
       throw new BadRequestException("You are not the owner of this note");
     }
 
     const updatedSharedWith = existing.shared_with_user_ids || [];
+
     if (!updatedSharedWith.includes(targetUserId)) {
       updatedSharedWith.push(targetUserId);
     }
@@ -147,12 +197,20 @@ export class NotesService {
       .update({ shared_with_user_ids: updatedSharedWith })
       .eq("id", noteId)
       .select();
+
     if (error) {
       throw new BadRequestException(error.message);
     }
+
     return data;
   }
 
+  /**
+   * Remove a note for a user
+   *
+   * @param noteId The ID of the note
+   * @param userId The ID of the user
+   */
   async removeNoteForUser(noteId: number, userId: number) {
     const { data: existing, error: findError } = await this.supabaseService
       .getClient()
@@ -160,7 +218,9 @@ export class NotesService {
       .select()
       .eq("id", noteId)
       .single();
+
     if (findError) throw findError;
+
     if (!existing) {
       throw new NotFoundException("Note not found");
     }
@@ -172,7 +232,9 @@ export class NotesService {
         .from("notes")
         .delete()
         .eq("id", noteId);
+
       if (delErr) throw new BadRequestException(delErr.message);
+
       return { message: "Note deleted from system" };
     } else {
       // If not owner, remove user from shared_with_user_ids
@@ -181,25 +243,36 @@ export class NotesService {
           "You do not have access to remove this note",
         );
       }
+
       const updatedSharedWith = existing.shared_with_user_ids.filter(
         (id: any) => id !== userId,
       );
+
       const { error: updateErr } = await this.supabaseService
         .getClient()
         .from("notes")
         .update({ shared_with_user_ids: updatedSharedWith })
         .eq("id", noteId);
+
       if (updateErr) {
         throw new BadRequestException(updateErr.message);
       }
+
       return { message: "Note removed for this user only" };
     }
   }
 
+  /**
+   * Reorder notes for a user
+   *
+   * @param userId The ID of the user
+   * @param noteOrder The new order of note IDs
+   */
   async reorderNotes(userId: number, noteOrder: number[]) {
     // For each note ID in the new order, set sort_order = index
     for (let i = 0; i < noteOrder.length; i++) {
       const id = noteOrder[i];
+
       await this.supabaseService
         .getClient()
         .from("notes")
@@ -207,6 +280,7 @@ export class NotesService {
         .eq("id", id)
         .or(`user_id.eq.${userId},shared_with_user_ids.cs.{${userId}}`);
     }
+
     return { message: "Notes reordered" };
   }
 }

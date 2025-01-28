@@ -17,4 +17,7 @@ import { SupabaseModule } from "./supabase/supabase.module";
     ProfileModule,
   ],
 })
+/**
+ * Main application module
+ */
 export class AppModule {}

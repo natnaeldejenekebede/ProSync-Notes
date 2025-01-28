@@ -8,4 +8,7 @@ import { SupabaseModule } from "../supabase/supabase.module";
   providers: [ProfileService],
   controllers: [ProfileController],
 })
+/**
+ * Module for handling profile-related functionality
+ */
 export class ProfileModule {}

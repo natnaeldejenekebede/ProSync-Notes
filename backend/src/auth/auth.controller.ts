@@ -2,9 +2,17 @@ import { Controller, Post, Body } from "@nestjs/common";
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from "@nestjs/swagger";
 import { AuthService } from "./auth.service";
 
-@ApiTags("Authentication") // Group these endpoints under "Authentication"
+@ApiTags("Authentication")
 @Controller("auth")
+/**
+ * Controller for handling authentication-related endpoints
+ */
 export class AuthController {
+  /**
+   * Constructor for the AuthController
+   *
+   * @param authService The AuthService instance
+   */
   constructor(private readonly authService: AuthService) {}
 
   @Post("register")
@@ -22,6 +30,11 @@ export class AuthController {
       },
     },
   })
+  /**
+   * Register a new user
+   *
+   * @param body
+   */
   register(
     @Body() body: { username: string; email: string; password: string },
   ) {
@@ -42,6 +55,11 @@ export class AuthController {
       },
     },
   })
+  /**
+   * Login an existing user
+   *
+   * @param body The request body
+   */
   login(@Body() body: { email: string; password: string }) {
     return this.authService.login(body.email, body.password);
   }
@@ -59,6 +77,11 @@ export class AuthController {
       },
     },
   })
+  /**
+   * Check if an email exists
+   *
+   * @param body The request body
+   */
   checkEmail(@Body() body: { email: string }) {
     return this.authService.checkEmailExists(body.email);
   }
@@ -81,6 +104,11 @@ export class AuthController {
       },
     },
   })
+  /**
+   * Reset a user's password
+   *
+   * @param body The request body
+   */
   resetPassword(
     @Body()
     body: {

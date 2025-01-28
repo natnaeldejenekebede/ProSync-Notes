@@ -5,4 +5,7 @@ import { SupabaseService } from "./supabase.service";
   providers: [SupabaseService],
   exports: [SupabaseService],
 })
+/**
+ * Module for handling Supabase-related functionality
+ */
 export class SupabaseModule {}

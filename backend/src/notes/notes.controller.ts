@@ -23,10 +23,18 @@ import {
   ApiBearerAuth,
 } from "@nestjs/swagger";
 
-@ApiTags("Notes") // Group endpoints under the "Notes" category
+@ApiTags("Notes")
 @Controller("notes")
 @ApiBearerAuth()
+/**
+ * Controller for handling note-related endpoints
+ */
 export class NotesController {
+  /**
+   * Constructor for the NotesController
+   *
+   * @param notesService The NotesService instance
+   */
   constructor(private readonly notesService: NotesService) {}
 
   @UseGuards(AuthGuard("jwt"))
@@ -47,6 +55,9 @@ export class NotesController {
     description: "List of user notes retrieved successfully",
   })
   @ApiResponse({ status: 401, description: "Unauthorized access" })
+  /**
+   * Retrieve notes for the authenticated user
+   */
   async getNotes(
     @Request() req: AuthenticatedRequest,
     @Query("search") search?: string,
@@ -84,6 +95,9 @@ export class NotesController {
       },
     },
   })
+  /**
+   * Create a new note for the authenticated user
+   */
   async createNote(
     @Request() req: AuthenticatedRequest,
     @Body()
@@ -111,6 +125,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note updated successfully" })
   @ApiResponse({ status: 404, description: "Note not found" })
   @ApiParam({ name: "id", description: "ID of the note to update" })
+  /**
+   * Update a note for the authenticated user
+   */
   async updateNote(
     @Request() req: AuthenticatedRequest,
     @Param("id") id: string,
@@ -137,6 +154,9 @@ export class NotesController {
       },
     },
   })
+  /**
+   * Share a note with another user
+   */
   async shareNote(
     @Request() req: AuthenticatedRequest,
     @Param("id") id: string,
@@ -155,6 +175,9 @@ export class NotesController {
   @ApiResponse({ status: 200, description: "Note deleted successfully" })
   @ApiResponse({ status: 404, description: "Note not found" })
   @ApiParam({ name: "id", description: "ID of the note to delete" })
+  /**
+   * Delete a note for the authenticated user
+   */
   async removeNoteForUser(
     @Request() req: AuthenticatedRequest,
     @Param("id") id: string,
@@ -180,6 +203,9 @@ export class NotesController {
       },
     },
   })
+  /**
+   * Reorder notes for the authenticated user
+   */
   async reorderNotes(
     @Request() req: AuthenticatedRequest,
     @Body() body: { noteOrder: number[] },
