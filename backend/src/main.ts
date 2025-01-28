@@ -49,11 +49,11 @@ async function bootstrap() {
       "hoangson091104@gmail.com",
     )
     .setLicense("MIT", "https://opensource.org/licenses/MIT")
-    .addServer("http://localhost:4000", "Development server")
     .addServer(
       "https://collabnote-fullstack-app.onrender.com",
       "Production server",
     )
+    .addServer("http://localhost:4000", "Development server")
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);

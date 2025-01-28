@@ -199,12 +199,21 @@ DocuThinker-AI-App/
 │   │   │   ├── auth.module.ts        # Authentication module
 │   │   │   ├── auth.controller.ts    # Authentication controller
 │   │   │   ├── auth.service.ts       # Authentication service
+│   │   │   ├── auth.schema.ts        # Authentication schema
+│   │   │   ├── auth.resolver.ts      # Authentication resolver
 │   │   │   └── jwt.strategy.ts       # JWT authentication strategy
+│   │   ├── dto/
+│   │   │   ├── create-note.input.ts  # Create note DTO
+│   │   │   └── update-note.input.ts  # Update note DTO
 │   │   ├── notes/
+│   │   │   ├── notes.schema.ts       # Notes schema
+│   │   │   ├── notes.resolver.ts     # Notes resolver
 │   │   │   ├── notes.module.ts       # Notes module
 │   │   │   ├── notes.controller.ts   # Notes controller
 │   │   │   └── notes.service.ts      # Notes service
 │   │   ├── profile/
+│   │   │   ├── profile.schema.ts     # Profile schema
+│   │   │   ├── profile.resolver.ts   # Profile resolver
 │   │   │   ├── profile.module.ts     # Profile module
 │   │   │   ├── profile.controller.ts # Profile controller
 │   │   │   └── profile.service.ts    # Profile service
@@ -213,6 +222,7 @@ DocuThinker-AI-App/
 │   │   │   └── supabase.service.ts   # Supabase service
 │   │   ├── types/
 │   │   │   └── authenticated-request.ts  # Authenticated user type
+│   │   ├── schema.gql                # GraphQL schema 
 │   │   ├── app.module.ts             # Main app module
 │   │   ├── app.test.ts               # App test file
 │   │   └── main.ts                   # Main entry point for the backend
