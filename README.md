@@ -30,7 +30,9 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
   - [Using Docker](#using-docker)
 - [📖 API Documentation](#-api-documentation)
   - [API Endpoints](#api-endpoints)
+  - [Database Schema](#database-schema)
   - [Detailed Guide for Using the `openapi.yaml` File](#detailed-guide-for-using-the-openapiyaml-file)
+- [🖥️ GraphQL Integration](#-graphql-integration)
 - [🧰 Nginx Configuration](#-nginx-configuration)
 - [🌐 Kubernetes Deployment](#-kubernetes-deployment)
 - [👨🏻‍💻 Continuous Integration and Deployment with Jenkins](#-continuous-integration-and-deployment-with-jenkins)
@@ -397,6 +399,16 @@ All APIs are documented in Swagger. Access the documentation at [http://localhos
 | GET    | `/profile/userId/{id}`     | Retrieve a user profile by ID             |
 | GET    | `/profile/search`          | Search for a user profile by username     |
 | PATCH  | `/profile/me`              | Update the authenticated user's profile   |
+
+### Database Schema
+
+The database schema consists of the following tables:
+
+<p align="center">
+  <img src="img/schema.png" alt="Database Schema" />
+</p>
+
+Note the `user_id` foreign key relationship between the `notes` and `users` tables. Additionally, more tables will be added as the app grows in the future!
 
 ### Detailed Guide for Using the `openapi.yaml` File
 
