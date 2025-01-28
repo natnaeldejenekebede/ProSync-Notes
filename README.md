@@ -6,6 +6,8 @@
 [![Supabase](https://img.shields.io/badge/Supabase-v1.0.0-000000?style=for-the-badge&logo=supabase)](https://supabase.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v15-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![Swagger](https://img.shields.io/badge/Swagger-v4.1.6-85EA2D?style=for-the-badge&logo=swagger)](https://swagger.io/)
+[![GraphQL](https://img.shields.io/badge/GraphQL-v15.5.0-E10098?style=for-the-badge&logo=graphql)](https://graphql.org/)
+[![React](https://img.shields.io/badge/React-v17.0.2-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Docker](https://img.shields.io/badge/Docker-v20.10.8-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![Nginx](https://img.shields.io/badge/Nginx-v1.21.4-269539?style=for-the-badge&logo=nginx)](https://nginx.org/)
@@ -53,12 +55,13 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 - **Testing**: Unit and integration tests for backend and frontend.
 - **Responsive Design**: Works on all devices and screen sizes.
 - **Swagger Documentation**: Comprehensive API documentation.
+- **CI/CD Pipeline**: Jenkins pipeline for automated testing and deployment.
 
 ## 🚀 Deployment
 
 The app is deployed on Vercel for the frontend. You can access the live app at [CollabNote](https://collabnote-app.vercel.app/).
 
-Additionally, the backend API is deployed on Render. You can access the API documentation at [CollabNote API](hhttps://collabnote-fullstack-app.onrender.com/).
+Additionally, the backend API is deployed on Render. You can access the API documentation at [CollabNote API](https://collabnote-fullstack-app.onrender.com/).
 
 The backup frontend is also hosted on Netlify, which you can access at [CollabNote Netlify](https://notesapp-nestjs.netlify.app/).
 
@@ -84,6 +87,7 @@ The backup frontend is also hosted on Netlify, which you can access at [CollabNo
 | [Render](https://render.com/)                 | Cloud platform for hosting apps     |
 | [Vercel](https://vercel.com/)                 | Cloud platform for frontend hosting |
 | [Netlify](https://www.netlify.com/)           | Cloud platform for hosting apps     |
+| [GraphQL](https://graphql.org/)               | Query language for APIs             |
 
 ## 🖼️ UI Overview
 
@@ -360,7 +364,6 @@ Ensure you have the following installed:
 - **Backend**: [http://localhost:4000](http://localhost:4000)
 - **Swagger**: [http://localhost:4000/api](http://localhost:4000/api)
 
-
 ### Using Docker
 
 1. **Build and Run Docker Containers**:
@@ -449,6 +452,43 @@ All APIs are documented in Swagger. Access the documentation at [http://localhos
 
 This guide enables you to view, test, and utilize the API.
 
+## **🖥️ GraphQL Integration**
+
+The CollabNote API also supports GraphQL for querying and manipulating data.
+
+To access, navigate to [https://collabnote-fullstack-app.onrender.com/graphql](https://collabnote-fullstack-app.onrender.com/graphql) and use the GraphQL Playground to interact with the API.
+
+Alternatively, you can start a local backend server following the steps above and access the GraphQL Playground at [http://localhost:4000/graphql](http://localhost:4000/graphql).
+
+You should see something like this:
+
+<p align="center">
+  <img src="img/graphql.png" alt="GraphQL Playground" />
+</p>
+
+You can query something like this:
+
+```graphql
+query {
+  getUserNotes(userId: 1, searchQuery: "", tagFilter: "") {
+    id
+    title
+    content
+    tags
+    dueDate
+    color
+    pinned
+    sharedWithUserIds
+    sortOrder
+    username
+  }
+}
+```
+
+This query fetches all notes for a user with ID 1. You can modify the query to suit your needs.
+
+Feel free to explore the GraphQL API and test different queries and mutations! Consult the [GraphQL documentation](https://graphql.org/learn/) for more information.
+
 ## **🧰 Nginx Configuration**
 
 - The `nginx` directory contains an Nginx configuration for reverse proxy and load balancing.
@@ -486,7 +526,7 @@ server {
 
 ## **👨🏻‍💻 Continuous Integration and Deployment with Jenkins**
 
-The Budget Management API includes a Jenkins pipeline for continuous integration and deployment.
+The CollabNote API also includes a Jenkins pipeline for continuous integration and deployment.
 
 1. **Pipeline Configuration:** The `Jenkinsfile` defines the CI/CD pipeline stages, including code checkout, dependency installation, testing, building, and deployment. Add it to the root of the project.
 
