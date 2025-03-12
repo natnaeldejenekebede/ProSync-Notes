@@ -32,24 +32,31 @@ export default function Navbar() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  // Poll localStorage every second to update token state
+  // Poll localStorage every 500ms to update token state.
+  // When no token is present, mimic the "token isn't present" logic.
   useEffect(() => {
     const interval = setInterval(() => {
       const storedToken = localStorage.getItem("access_token");
       if (storedToken !== token) {
         setToken(storedToken);
+        // When no token is present, ensure invalidToken is false
+        if (!storedToken) {
+          setInvalidToken(false);
+        }
       }
-    }, 1000);
-
-    return () => clearInterval(interval); // Cleanup interval on unmount
+    }, 500);
+    return () => clearInterval(interval);
   }, [token]);
 
+  // Check token validity every 500ms.
+  // When the token is missing (as in the "token isn't present" logic),
+  // simply set token to null without stopping the polling.
   useEffect(() => {
     const interval = setInterval(async () => {
       const t = localStorage.getItem("access_token");
       if (!t) {
         setToken(null);
-        clearInterval(interval);
+        // Do not clear the interval; keep polling for a potential token.
         return;
       }
       try {
@@ -65,16 +72,15 @@ export default function Navbar() {
           localStorage.removeItem("access_token");
           setToken(null);
           setInvalidToken(true);
-          clearInterval(interval);
+          // Continue polling so that if a valid token is set later, it is picked up.
         }
       } catch {
         localStorage.removeItem("access_token");
         setToken(null);
         setInvalidToken(true);
-        clearInterval(interval);
+        // Continue polling
       }
-    }, 1000);
-
+    }, 500);
     return () => clearInterval(interval);
   }, []);
 
