@@ -2,23 +2,22 @@
 
 [![NestJS](https://img.shields.io/badge/NestJS-v11.0.0-E0234E?style=for-the-badge&logo=nestjs)](https://nestjs.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-v12.0.7-000000?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-v17.0.2-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-v6.0.5-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
 [![Supabase](https://img.shields.io/badge/Supabase-v1.0.0-000000?style=for-the-badge&logo=supabase)](https://supabase.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v15-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![Material UI](https://img.shields.io/badge/Material%20UI-v5.0.0-007FFF?style=for-the-badge&logo=mui)](https://mui.com/)
 [![Swagger](https://img.shields.io/badge/Swagger-v4.1.6-85EA2D?style=for-the-badge&logo=swagger)](https://swagger.io/)
 [![GraphQL](https://img.shields.io/badge/GraphQL-v15.5.0-E10098?style=for-the-badge&logo=graphql)](https://graphql.org/)
-[![React](https://img.shields.io/badge/React-v17.0.2-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Docker](https://img.shields.io/badge/Docker-v20.10.8-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
 [![Nginx](https://img.shields.io/badge/Nginx-v1.21.4-269539?style=for-the-badge&logo=nginx)](https://nginx.org/)
-[![Kubernetes](https://img.shields.io/badge/Kubernetes-v1.22-326CE5?style=for-the-badge&logo=kubernetes)](https://kubernetes.io/)
 [![Jenkins](https://img.shields.io/badge/Jenkins-v2.319-000000?style=for-the-badge&logo=jenkins)](https://www.jenkins.io/)
-[![ShadCN](https://img.shields.io/badge/ShadCN-UI%20Toolkit-blue?style=for-the-badge)](https://ui.shadcn.dev/)
 
 CollabNote is a collaborative notes platform designed to help you take, share, and manage notes effectively. It features a user-friendly interface, powerful backend APIs, and seamless deployment for both frontend and backend.
 
 ## Table of Contents
-- [🚀 Features](#-features)
+- [💡 Features](#-features)
 - [🚀 Deployment](#-deployment)
 - [🎯 Tech Stack](#-tech-stack)
 - [🖼️ UI Overview](#-ui-overview)
@@ -43,7 +42,7 @@ CollabNote is a collaborative notes platform designed to help you take, share, a
 - [📄 License](#-license)
 - [🎉 Acknowledgments](#-acknowledgments)
 
-## 🚀 Features
+## 💡 Features
 
 - **Authentication**: Secure user login, registration, and password management.
 - **Notes Management**: Create, update, delete, and reorder notes.
@@ -69,6 +68,8 @@ The backup frontend is also hosted on Netlify, which you can access at [CollabNo
 
 > Note: The backend API may spin down due to inactivity. If you encounter any issues, please try again later. If inactive, the API may take a few seconds to start up, so frontend requests and Swagger may take some time to load initially.
 
+> Important: Supabase may pause the app's database if it exceeds the free tier limits. Thus, if you are unable to log in or register, [let me know](mailto:hoangson091104@gmail.com) and I will re-enable it (and it may take a while...)
+
 ## 🎯 Tech Stack
 
 | Technology                                    | Description                         |
@@ -81,14 +82,11 @@ The backup frontend is also hosted on Netlify, which you can access at [CollabNo
 | [PostgreSQL](https://www.postgresql.org/)     | Database for storing app data       |
 | [TypeScript](https://www.typescriptlang.org/) | Type-safe development               |
 | [Swagger](https://swagger.io/)                | API documentation and testing tool  |
-| [ShadCN](https://ui.shadcn.dev/)              | UI components for a modern design   |
 | [Docker](https://www.docker.com/)             | Containerization for apps           |
 | [Nginx](https://nginx.org/)                   | Web server for load balancing       |
-| [Kubernetes](https://kubernetes.io/)          | Container orchestration platform    |
-| [Jenkins](https://www.jenkins.io/)            | CI/CD tool for automation           |
+| [Jenkins](https://www.jenkins.io/)            | CI/CD tool for automated testing    |
 | [Render](https://render.com/)                 | Cloud platform for hosting apps     |
 | [Vercel](https://vercel.com/)                 | Cloud platform for frontend hosting |
-| [Netlify](https://www.netlify.com/)           | Cloud platform for hosting apps     |
 | [GraphQL](https://graphql.org/)               | Query language for APIs             |
 
 ## 🖼️ UI Overview

@@ -33,7 +33,7 @@ export class AuthController {
   /**
    * Register a new user
    *
-   * @param body
+   * @param body The request body
    */
   register(
     @Body() body: { username: string; email: string; password: string },

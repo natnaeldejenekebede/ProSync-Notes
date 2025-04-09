@@ -63,6 +63,7 @@ async function bootstrap() {
     customSiteTitle: "CollabNote API Documentation",
   });
 
+  // Start up the NestJS application
   const port = configService.get<number>("PORT", 4000);
   await app.listen(port, () => {
     logger.log(`NestJS Backend running on port ${port}`);

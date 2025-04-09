@@ -31,12 +31,17 @@ export default function LoginPage() {
           body: JSON.stringify({ email, password }),
         },
       );
+
+      console.log(response);
       if (!response.ok) throw new Error("Login failed");
       const data = await response.json();
       localStorage.setItem("access_token", data.access_token);
       navigate("/notes");
     } catch (err) {
-      alert(err);
+      alert(
+        err +
+          " - Please check your email and password. It may also be that this Supabase project is paused. If you encounter this issue again, please contact the project owner for assistance.",
+      );
     } finally {
       setLoading(false);
     }

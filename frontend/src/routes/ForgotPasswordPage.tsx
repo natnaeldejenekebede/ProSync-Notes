@@ -74,7 +74,10 @@ export default function ForgotPasswordPage() {
         "Password reset successful! You can now login with your new password.",
       );
     } catch (err) {
-      alert(err);
+      alert(
+        err +
+          " - Please check your email and password. It may also be that this Supabase project is paused. If you encounter this issue again, please contact the project owner for assistance.",
+      );
     } finally {
       setLoading(false);
     }
