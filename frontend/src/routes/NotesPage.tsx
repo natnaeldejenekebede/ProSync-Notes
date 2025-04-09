@@ -38,6 +38,7 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
+import { styled, keyframes } from "@mui/material/styles";
 
 const PREDEFINED_TAGS: { label: string; color: string }[] = [
   { label: "Work", color: "#F44336" },
@@ -45,6 +46,29 @@ const PREDEFINED_TAGS: { label: string; color: string }[] = [
   { label: "Urgent", color: "#FF9800" },
   { label: "Leisure", color: "#9C27B0" },
 ];
+
+const getTiltAngle = (noteId: number): number => {
+  return Math.sin(noteId) * 1.5; // Returns a value between approximately -5 and +5.
+};
+
+// A helper function to create a keyframes animation. It keeps the same tilt
+// so the note appears to "float" while preserving the initial rotation.
+const createStickyAnimation = (tilt: number) => keyframes`
+  0% { transform: rotate(${tilt}deg) translateY(0); }
+  50% { transform: rotate(${tilt}deg) translateY(-4px); }
+  100% { transform: rotate(${tilt}deg) translateY(0); }
+`;
+
+const StickyNoteCard = styled(Card)(({ tilt }: { tilt: number }) => ({
+  transform: `rotate(${tilt}deg) translateY(0)`,
+  transition: "transform 0.2s, box-shadow 0.2s",
+  animation: `${createStickyAnimation(tilt)} 3s ease-in-out infinite`,
+  "&:hover": {
+    animation: "none", // Pause the floating animation on hover.
+    transform: `rotate(${tilt}deg) translateY(-4px)`,
+    boxShadow: "0 8px 16px rgba(0,0,0,0.2)",
+  },
+}));
 
 type Note = {
   id: number;
@@ -568,8 +592,7 @@ export default function NotesPage() {
       <LoadingOverlay loading={loading} />
       <Container maxWidth="lg" sx={{ pt: 4, pb: 4 }}>
         <Typography variant="h4" sx={{ mb: 2, fontWeight: 600 }}>
-          Good {new Date().getHours() < 12 ? "Morning" : "Afternoon"},{" "}
-          {username}!
+          Good {new Date().getHours() < 12 ? "Morning" : "Afternoon"}, {username}!
         </Typography>
         <Typography
           variant="subtitle1"
@@ -645,19 +668,14 @@ export default function NotesPage() {
         <Grid container spacing={2}>
           {notes.map((note) => {
             const textColor = getContrastingTextColor(note.color || "#FFFFFF");
+            // Use the helper to get a deterministic tilt based on note.id.
+            const tilt = getTiltAngle(note.id);
 
             return (
               <Grid key={note.id} item xs={12} sm={6} md={4} lg={3}>
-                <Card
-                  sx={{
-                    backgroundColor: note.color || "#ffffff",
-                    position: "relative",
-                    transition: "transform 0.2s, box-shadow 0.2s",
-                    "&:hover": {
-                      transform: "translateY(-4px)",
-                      boxShadow: 6,
-                    },
-                  }}
+                <StickyNoteCard
+                  tilt={tilt}
+                  sx={{ backgroundColor: note.color || "#ffffff", position: "relative" }}
                 >
                   <Box
                     sx={{ position: "absolute", top: 8, left: 8, zIndex: 10 }}
@@ -680,7 +698,7 @@ export default function NotesPage() {
                       cursor: "pointer",
                       pt: 5,
                       mt: 2,
-                      color: textColor, // Apply dynamic text color
+                      color: textColor, // Dynamic text color for contrast
                     }}
                   >
                     <Typography
@@ -690,7 +708,7 @@ export default function NotesPage() {
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",
-                        color: textColor, // Apply dynamic text color
+                        color: textColor,
                       }}
                     >
                       {note.title}
@@ -705,7 +723,7 @@ export default function NotesPage() {
                         display: "-webkit-box",
                         WebkitLineClamp: 3,
                         WebkitBoxOrient: "vertical",
-                        color: textColor, // Apply dynamic text color
+                        color: textColor,
                       }}
                     >
                       {note.content}
@@ -717,7 +735,7 @@ export default function NotesPage() {
                           display: "block",
                           mt: 1,
                           fontStyle: "italic",
-                          color: textColor, // Apply dynamic text color
+                          color: textColor,
                         }}
                       >
                         Due: {note.due_date}
@@ -730,7 +748,7 @@ export default function NotesPage() {
                           display: "flex",
                           flexWrap: "wrap",
                           gap: 1,
-                          color: textColor, // Apply dynamic text color
+                          color: textColor,
                         }}
                       >
                         {note.tags.map((tag, idx) => {
@@ -802,7 +820,7 @@ export default function NotesPage() {
                       </IconButton>
                     </Box>
                   </CardActions>
-                </Card>
+                </StickyNoteCard>
               </Grid>
             );
           })}
